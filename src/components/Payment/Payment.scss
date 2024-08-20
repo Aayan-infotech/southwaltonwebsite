@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+$font-family: 'Raleway', sans-serif;
+
+.payment-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  align-items: center;
+  padding: 2em;
+  font-family: $font-family;
+
+  .card-section {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 100%;
+      max-width: 400px; // Adjust the max-width as needed
+      height: auto;
+    }
+  }
+
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+
+    label {
+      font-size: 1.2em;
+      font-weight: 500;
+      margin: 0.5em 0;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 50%;
+      padding: 0.9em;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 50px;
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: space-evenly;
+      gap: 2em;
+      width: 40%;
+
+      .expiry-date-group,
+      .cvv-group {
+        display: flex;
+        flex-direction: column;
+        width: 48%;
+      }
+
+      .cvv-group {
+        margin-left: 4%;
+        margin-top: 1em; // Added margin-top for CVV input
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        margin-top: 1em;
+      }
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1em;
+
+      input[type="checkbox"] {
+        margin-right: 0.5em;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5em;
+      }
+    }
+
+    button {
+      width: 11vw;
+      padding: 0.75em;
+      border: none;
+      border-radius: 25px;
+      background-color: #b4a911;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #555;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    .card-section {
+      margin-bottom: 2em;
+      img {
+        width: 80%;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1em;
+
+    .card-section {
+      img {
+        width: 100%;
+      }
+    }
+
+    .form-section {
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+      }
+
+      .input-group {
+        flex-direction: column;
+
+        .expiry-date-group,
+        .cvv-group {
+          width: 100%;
+        }
+
+        .cvv-group {
+          margin-top: 1em; // Added margin-top for CVV input
+        }
+
+        input[type="text"],
+        input[type="number"] {
+          width: 100%;
+          margin-bottom: 1em;
+        }
+      }
+    }
+  }
+}
