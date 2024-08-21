@@ -6,7 +6,7 @@ const CartDetails = () => {
     const [endDate, setEndDate] = useState('');
     const [deliveryLocation, setDeliveryLocation] = useState('');
     const [pickupLocation, setPickupLocation] = useState('');
-
+    
     const startDateRef = useRef(null);
     const endDateRef = useRef(null);
     const deliveryRef = useRef(null);
