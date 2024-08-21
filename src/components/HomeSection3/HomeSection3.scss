@@ -6,6 +6,7 @@ $font-family: 'Raleway';
   justify-content: center;
   align-items: center;
   margin: 1em 2em;
+  
   font-family: 'Raleway';
 
   h1 {
@@ -21,6 +22,7 @@ $font-family: 'Raleway';
 .home3-details {
   font-family: 'Raleway';
   display: flex;
+  
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
@@ -31,6 +33,8 @@ $font-family: 'Raleway';
   .date-input {
     display: flex;
     align-items: start;
+    gap: 4rem;
+    margin-left: 4px;
 
     .input-wrapper,
     .date-wrapper {
@@ -49,8 +53,10 @@ $font-family: 'Raleway';
         border: 1px solid #000;
         border-radius: 50px;
         padding: 15px 20px;
-        width: 250px;
+        width: 260px;
+        
       }
+ 
 
       .date-box {
         background-color: transparent;
@@ -74,7 +80,7 @@ $font-family: 'Raleway';
         background-color: #d5dd1e;
         border-radius: 50px;
         padding: 15px 10px;
-        width: 200px; // Ensure this matches the width of the .date-box
+        width: 100px; // Ensure this matches the width of the .date-box
         text-align: center;
         display: flex;
         justify-content: space-between;

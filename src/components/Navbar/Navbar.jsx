@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
         <a href="/about">About Us</a>
         <a href="/cart">Cart</a>
-        <a href="/booking">Book</a>
+        
         <Link to ='/login'>
         <button className="login-button">Login</button>
         </Link>

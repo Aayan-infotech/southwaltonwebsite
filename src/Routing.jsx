@@ -30,6 +30,7 @@ import ChangePassword from "./components/ChangePassword/Change";
 import Feedback from "./components/Feedback/Feedback";
 import DownloadApp from "./components/DownloadApp/DownloadApp";
 import PaymentSuccessfully from "./components/PaymentSuccessfully/PaymentSuccessfully";
+import Popup from "./components/Popup/Popup";
 
 function Routing() {
     return (
@@ -68,6 +69,7 @@ function Routing() {
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/download" element={<DownloadApp />} />
             <Route path="/payment-successfully" element={<PaymentSuccessfully />} />
+            <Route path="/popup" element={<Popup/>} />
 
           </Routes>
           <Footer/>
