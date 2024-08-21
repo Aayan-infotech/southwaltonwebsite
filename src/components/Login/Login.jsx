@@ -9,15 +9,15 @@ const Login = () => {
     email: '',
     password: '',
     rememberMe: false
-  });
+  }); 
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Hook for programmatic navigation
-
+  const navigate = useNavigate(); 
+                           
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value 
     });
   };
 
@@ -93,3 +93,5 @@ const Login = () => {
 };
 
 export default Login;
+
+
