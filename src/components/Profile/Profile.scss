@@ -12,12 +12,14 @@
   }
 
   .image-section {
+    width: 30%;
+    height: auto;
     @media (max-width: 768px) {
       margin-bottom: 1em;
     }
 
     img {
-      max-width: 100%;
+    width: 80%;
       height: auto;
       border-radius: 50%; // Optional, if you want a circular image
     }
