@@ -276,7 +276,7 @@ import { useNavigate } from 'react-router-dom';
 
 const fetchVehicledata = async (setCardDetails, setError) => {
   try {
-    const response = await axios.get('http://3.111.163.2:5001/api/vehicle/');
+    const response = await axios.get('http://localhost:5001/api/vehicle/');
     setCardDetails(response.data);
   } catch (error) {
     setError('Error fetching details');
@@ -286,14 +286,14 @@ const fetchVehicledata = async (setCardDetails, setError) => {
 
 const changecartstatus = async (id, status) => {
   try {
-    await axios.put(`http://3.111.163.2:5001/api/vehicle/changestatus/${id}`, { status });
+    await axios.put(`http://localhost:5001/api/vehicle/changestatus/${id}`, { status });
   } catch (error) {
     console.log('Error changing Status', error);
   }
 };
 
 const Card = ({ image, passengers, model, price, id, status, onChoose }) => {
-  const imageUrl = image ? `http://3.111.163.2:5001/uploads/${image}` : Group3;
+  const imageUrl = image ? `http://localhost:5001/uploads/${image}` : Group3;
 
   return (
     <div className="card-cart2">
