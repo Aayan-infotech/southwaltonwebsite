@@ -78,7 +78,7 @@ const BookingForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://3.111.163.2:5001/api/book/create', {
+      const response = await fetch('http://localhost:5001/api/book/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
