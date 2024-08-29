@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './Agreement.scss';
 
 const Agreement = () => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate(); 
 
   const handleClear = () => {
     sigCanvas.current.clear();
