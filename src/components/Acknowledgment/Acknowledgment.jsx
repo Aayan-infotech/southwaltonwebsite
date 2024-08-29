@@ -21,7 +21,7 @@ else{
       </div>
       <button className="next-button" onClick={handleChange}>Next</button>
     </div>
-  );
+  ); 
 };
  
 export default Acknowledgment;
