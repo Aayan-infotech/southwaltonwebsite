@@ -3,6 +3,7 @@
   import image1 from './img/image1.png'; // Adjust the path to your logo file
   import { Link, useNavigate } from 'react-router-dom';
 
+
   const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
@@ -18,6 +19,9 @@
     const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
     };
+    const handleContactUs=()=>{
+      navigate('/contact')
+    }
 
     return (
       <nav className="navbar">
@@ -48,7 +52,7 @@
                 </>
               )}
 
-          <button className="contact-button">Contact Us</button>
+          <button className="contact-button" onClick={handleContactUs}>Contact Us</button>
         </div>
       </nav>
     );

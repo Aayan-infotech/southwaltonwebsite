@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback,useEffect } from 'react';
 import './Checkout.scss';
 import Checkout1 from '../Checkout1/Checkout1';
 import { Link, useNavigate } from 'react-router-dom';
 import { Autocomplete, useLoadScript } from '@react-google-maps/api';
+import axios from 'axios';
 
 const libraries = ['places'];
 
@@ -27,12 +28,38 @@ const BookingForm = () => {
       experience: ''
     }]
   });
+  const [size, setSize] = useState('');
 
   const navigate = useNavigate();
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyAHWgq2_Us0Dq7UcVoP4FRGYcDqDh6XH_M',
     libraries,
   });
+  const getSize = async () => {
+    try {
+      const vehicleId = localStorage.getItem('vehicle_Id');
+      if (!vehicleId) {
+        console.error('Vehicle ID not found in local storage');
+        return;
+      }
+
+      const response = await axios.get(`http://localhost:5001/api/vehicle/vehicles/${vehicleId}`);
+      const data = response.data;
+      console.log('API response data:', data); // Verify the data structure
+      setSize(data.vseats);
+      setFormData(prevData => ({
+        ...prevData,
+        bsize: data.vseats
+      }));
+    } catch (error) {
+      console.log("Error fetching vehicle details", error);
+    }
+  };
+  useEffect(() => {
+    getSize();
+  }, []);
+  
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -211,7 +238,7 @@ const BookingForm = () => {
           </div>
           <div className="form-group">
             <label><i className="fa-solid fa-envelope"></i> Email</label>
-            <input type="email" name="bemail" placeholder="Enter Email Address" value={formData.bemail} onChange={handleInputChange} />
+            <input type="email" name="bemail" placeholder="Enter Email Address" value={formData.bemail} onChange={handleInputChange} readOnly/>
           </div>
           <div className="form-group">
             <label><i className="fa-solid fa-cart-shopping"></i> Size of Cart</label>

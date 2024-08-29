@@ -22,7 +22,7 @@
 
   //       if (user) {
   //         try {
-  //           const response = await axios.get(`http://3.111.163.2:5001/api/user/${user}`);
+  //           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
   //           setUserData(response.data.data); // Set user data in state
   //           console.log("response", response.data.data);
   //         } catch (error) {
@@ -45,7 +45,7 @@
   //   const handleSubmit = async (e) => {
   //     e.preventDefault();
   //     try { 
-  //       const response = await axios.put(`http://3.111.163.2:5001/api/user/${user}`, userData);
+  //       const response = await axios.put(`http://localhost:5001/api/user/${user}`, userData);
   //       console.log('User data updated:', response.data);
   //     } catch (error) {
   //       console.error('Error updating user data:', error);
@@ -171,7 +171,7 @@
     
     //       if (user) {
     //         try {
-    //           const response = await axios.get(`http://3.111.163.2:5001/api/user/${user}`);
+    //           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
     //           setUserData(response.data.data); // Set user data in state
     //           console.log("response", response.data.data);
     //         } catch (error) {
@@ -215,7 +215,7 @@
     //     }
     
     //     try {
-    //       const response = await axios.put(`http://3.111.163.2:5001/api/user/${user}`, formData, {
+    //       const response = await axios.put(`http://localhost:5001/api/user/${user}`, formData, {
     //         headers: {
     //           'Content-Type': 'multipart/form-data', // Important for file uploads
     //         },
@@ -352,7 +352,7 @@
 
 //       if (user) {
 //         try {
-//           const response = await axios.get(`http://3.111.163.2:5001/api/user/${user}`);
+//           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
 //           setUserData(response.data.data); // Set user data in state
 //           console.log("response", response.data.data);
 //         } catch (error) {
@@ -423,7 +423,7 @@
 //     // }
 
 //     try {
-//       const response = await axios.put(`http://3.111.163.2:5001/api/user/${user}`, formData, {
+//       const response = await axios.put(`http://localhost:5001/api/user/${user}`, formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data', // Important for file uploads
 //         },

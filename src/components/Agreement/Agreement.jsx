@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Agreement.scss';
 
 const Agreement = () => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleClear = () => {
     sigCanvas.current.clear();
@@ -25,18 +27,18 @@ const Agreement = () => {
     }
 
     const userId = localStorage.getItem('user').replace(/"/g, '');
-    console.log(userId);
     if (!userId) {
       alert('User ID not found. Please log in again.');
       return;
     }
 
     try {
-      await axios.post('http://3.111.163.2:5001/api/sign/save', { 
+      await axios.post('http://localhost:5001/api/sign/save', { 
         userId,
         signatureData: signature 
       });
       alert('Signature saved successfully!');
+      navigate('/acknowledgment'); // Navigate to /payment-type on successful submit
     } catch (error) {
       console.error('Error saving signature:', error.response ? error.response.data : error.message);
     }
