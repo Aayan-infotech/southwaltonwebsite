@@ -1,13 +1,12 @@
 import React, { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Agreement.scss';
+
 
 const Agreement = () => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleClear = () => {
     sigCanvas.current.clear();
@@ -38,12 +37,13 @@ const Agreement = () => {
         signatureData: signature 
       });
       alert('Signature saved successfully!');
-      navigate('/acknowledgment'); // Navigate to /payment-type on successful submit
+
     } catch (error) {
       console.error('Error saving signature:', error.response ? error.response.data : error.message);
     }
   };
 
+  // mahi
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>Agreement</h1>
