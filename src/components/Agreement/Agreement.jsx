@@ -1,15 +1,12 @@
 import React, { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import './Agreement.scss';
 
 
 const Agreement = () => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
-  
-const navigate = useNavigate();
 
   const handleClear = () => {
     sigCanvas.current.clear();
@@ -29,7 +26,6 @@ const navigate = useNavigate();
     }
 
     const userId = localStorage.getItem('user').replace(/"/g, '');
-    console.log(userId);
     if (!userId) {
       alert('User ID not found. Please log in again.');
       return;
@@ -41,7 +37,7 @@ const navigate = useNavigate();
         signatureData: signature 
       });
       alert('Signature saved successfully!');
-      navigate('/feedback'); 
+
     } catch (error) {
       console.error('Error saving signature:', error.response ? error.response.data : error.message);
     }

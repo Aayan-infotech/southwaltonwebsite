@@ -1,8 +1,163 @@
+// $primary-color: #d8e034;
+// $secondary-color: #000;
+// $light-color: #fff;
+// $border-radius: 1.5rem;
+// $navbar-height: 60px;
+// @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+// $font-family: 'Raleway', sans-serif;
+
+// .navbar {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   height: $navbar-height;
+//   padding: 20px 20px;
+
+//   .navbar-logo {
+//     padding: 1em;
+//     img {
+//       height: 70px;
+//     }
+//   }
+
+//   .navbar-links {
+//     display: flex;
+//     align-items: center;
+//     a {
+//       margin: 0 19px;
+//       color: $secondary-color;
+//       text-decoration: none;
+//       font-weight: 500;
+//       font-size: 1.2em;
+
+//       &:hover{
+//         text-decoration: underline;
+//         color: #d8e034;
+//       }
+//     }
+
+//     .login-button,
+//     .signup-button {
+//       margin: 0 15px;
+//       padding: 0.5rem 1rem;
+//       border-radius: $border-radius;
+//       border: none;
+//       cursor: pointer;
+//       font-size: 1rem;
+
+//       &:hover{
+//         background-color: rgb(71, 69, 61);
+//         color: white;
+//       }
+//     }
+
+//     .login-button {
+//     //   background-color: $secondary-color;
+//     //   color: $light-color;
+//     background-color: transparent;
+//     color: $secondary-color;
+//     border: 1.5px solid $secondary-color;
+//     }
+
+//     .signup-button {
+//       background-color: transparent;
+//       color: $secondary-color;
+//       border: 1.5px solid $secondary-color;
+//     }
+//   }
+
+//   .navbar-search {
+//     // display: flex;
+//     align-items: center;
+//     margin-right: 1em;
+//     input {
+//       padding: 0.5rem 1rem;
+//       border-radius: $border-radius;
+//       border: 1px solid #ccc;
+//     //   margin-right: 111px;
+//     }
+
+//     .search-button {
+//        background-color:$secondary-color;
+//       color: $light-color;
+//       padding: 0.7rem;
+//       border: none;
+//       border-radius: $border-radius;
+//       cursor: pointer;
+//     }
+//   }
+
+//   .contact-button {
+//     background-color: $primary-color;
+//     color: $secondary-color;
+//     padding: 0.8rem 1rem;
+//     border: none;
+//     border-radius: $border-radius;
+//     cursor: pointer;
+//     margin-right: 8em;
+
+//     &:hover{
+//         background-color: #4b4b45;
+//         color: white;
+//     }
+//   }
+
+//   .menu-toggle {
+//     display: none;
+//     border: none;
+//     font-size: 1.5rem;
+//     cursor: pointer;
+//     border-radius: 1em;
+//   }
+
+//   @media (max-width: 1100px) {
+//     .navbar-links {
+//       display: none;
+//       flex-direction: column;
+//       align-items: right;
+//       width: 100%;
+//       position: absolute;
+//       top: $navbar-height;
+//       left: 0;
+//       background-color: #fff;
+//       padding: 20px;
+
+//       a,
+//       .login-button,
+//       .signup-button,
+//       .navbar-search,
+//       .contact-button {
+//         margin: 10px 0;
+//         width: 60%;
+//       }
+//     }
+
+//     .navbar-links.open {
+//       display: flex;
+//     }
+
+//     .navbar-search {
+//       display: block;
+//       width: 60%;
+//     }
+
+//     .contact-button {
+//       display: block;
+//       width: 60%;
+//     }
+
+//     .menu-toggle {
+//       display: block;
+//     }
+//   }
+// }
+// Define variables
 $primary-color: #d8e034;
 $secondary-color: #000;
 $light-color: #fff;
 $border-radius: 1.5rem;
 $navbar-height: 60px;
+
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 $font-family: 'Raleway', sans-serif;
 
@@ -30,7 +185,7 @@ $font-family: 'Raleway', sans-serif;
       font-weight: 500;
       font-size: 1.2em;
 
-      &:hover{
+      &:hover {
         text-decoration: underline;
         color: #d8e034;
       }
@@ -45,18 +200,16 @@ $font-family: 'Raleway', sans-serif;
       cursor: pointer;
       font-size: 1rem;
 
-      &:hover{
+      &:hover {
         background-color: rgb(71, 69, 61);
         color: white;
       }
     }
 
     .login-button {
-    //   background-color: $secondary-color;
-    //   color: $light-color;
-    background-color: transparent;
-    color: $secondary-color;
-    border: 1.5px solid $secondary-color;
+      background-color: transparent;
+      color: $secondary-color;
+      border: 1.5px solid $secondary-color;
     }
 
     .signup-button {
@@ -67,18 +220,16 @@ $font-family: 'Raleway', sans-serif;
   }
 
   .navbar-search {
-    // display: flex;
     align-items: center;
     margin-right: 1em;
     input {
       padding: 0.5rem 1rem;
       border-radius: $border-radius;
       border: 1px solid #ccc;
-    //   margin-right: 111px;
     }
 
     .search-button {
-       background-color:$secondary-color;
+      background-color: $secondary-color;
       color: $light-color;
       padding: 0.7rem;
       border: none;
@@ -96,9 +247,9 @@ $font-family: 'Raleway', sans-serif;
     cursor: pointer;
     margin-right: 8em;
 
-    &:hover{
-        background-color: #4b4b45;
-        color: white;
+    &:hover {
+      background-color: #4b4b45;
+      color: white;
     }
   }
 
@@ -114,13 +265,21 @@ $font-family: 'Raleway', sans-serif;
     .navbar-links {
       display: none;
       flex-direction: column;
-      align-items: right;
+      align-items: center;
       width: 100%;
       position: absolute;
       top: $navbar-height;
       left: 0;
       background-color: #fff;
       padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      transform: translateY(-100%);
+      
+      &.open {
+        display: flex;
+        transform: translateY(0);
+      }
 
       a,
       .login-button,
@@ -128,22 +287,18 @@ $font-family: 'Raleway', sans-serif;
       .navbar-search,
       .contact-button {
         margin: 10px 0;
-        width: 60%;
+        width: 80%;
       }
-    }
-
-    .navbar-links.open {
-      display: flex;
     }
 
     .navbar-search {
       display: block;
-      width: 60%;
+      width: 80%;
     }
 
     .contact-button {
       display: block;
-      width: 60%;
+      width: 80%;
     }
 
     .menu-toggle {
@@ -151,3 +306,4 @@ $font-family: 'Raleway', sans-serif;
     }
   }
 }
+
