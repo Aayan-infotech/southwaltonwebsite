@@ -8,6 +8,7 @@ const Agreement = () => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
 
+
   const handleClear = () => {
     sigCanvas.current.clear();
     setSignature('');
