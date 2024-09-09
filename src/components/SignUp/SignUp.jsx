@@ -32,7 +32,7 @@ function App() {
     };
 
     try {
-      const response = await axios.post('http://3.111.163.2:5001/api/auth/signUp', formData);
+      const response = await axios.post('http://localhost:5001/api/auth/signUp', formData);
       console.log(response.data);
       navigate('/login'); // Navigate to the login page on successful signup
     } catch (error) {

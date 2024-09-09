@@ -1,12 +1,15 @@
 import React, { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Agreement.scss';
 
 
 const Agreement = () => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
+  
+  const navigate = useNavigate();
 
 
   const handleClear = () => {
@@ -33,11 +36,12 @@ const Agreement = () => {
     }
 
     try {
-      await axios.post('http://3.111.163.2:5001/api/sign/save', { 
+      await axios.post('http://localhost:5001/api/sign/save', { 
         userId,
         signatureData: signature 
       });
       alert('Signature saved successfully!');
+      navigate('/payment-type');
 
     } catch (error) {
       console.error('Error saving signature:', error.response ? error.response.data : error.message);

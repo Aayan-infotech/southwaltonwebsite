@@ -43,7 +43,7 @@
 //         return;
 //       }
 
-//       const response = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+//       const response = await axios.get(`http://localhost:5001/api/vehicle/vehicles/${vehicleId}`);
 //       const data = response.data;
 //       console.log('API response data:', data); // Verify the data structure
 //       setSize(data.vseats);
@@ -105,7 +105,7 @@
 //     e.preventDefault();
 
 //     try {
-//       const response = await fetch('http://3.111.163.2:5001/api/book/create', {
+//       const response = await fetch('http://localhost:5001/api/book/create', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json'
@@ -333,7 +333,7 @@ const BookingForm = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyAHWgq2_Us0Dq7UcVoP4FRGYcDqDh6XH_M',
     libraries,
-  });
+  });  
 
   const deliveryRef = useRef(null);
   const pickupRef = useRef(null);
@@ -346,7 +346,7 @@ const BookingForm = () => {
         return;
       }
 
-      const response = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+      const response = await axios.get(`http://localhost:5001/api/vehicle/vehicles/${vehicleId}`);
       const data = response.data;
       console.log('API response data:', data); // Verify the data structure
       setFormData(prevData => ({
@@ -406,7 +406,7 @@ const BookingForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://3.111.163.2:5001/api/book/create', {
+      const response = await fetch('http://localhost:5001/api/book/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
