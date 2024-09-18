@@ -1,149 +1,247 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
-$font-family: 'Raleway', sans-serif;
+// $font-family: 'Raleway', sans-serif;
 
-.payment-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2em;
-  align-items: center;
-  padding: 2em;
-  font-family: $font-family;
+// .payment-container {
+//   display: flex;
+//   flex-direction: column ;
 
-  .card-section {
-    display: flex;
-    justify-content: center;
-    img {
-      width: 100%;
-      max-width: 400px; // Adjust the max-width as needed
-      height: auto;
-    }
+//   .card-section {
+//     display: flex;
+//     justify-content: center;
+//     img {
+//       width: 100%;
+//       max-width: 400px; // Adjust the max-width as needed
+//       height: auto;
+//     }
+//   }
+
+//   .form-section {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: flex-start;
+//     width: 100%;
+
+//     label {
+//       font-size: 1.2em;
+//       font-weight: 500;
+//       margin: 0.5em 0;
+//     }
+
+//     input[type="text"],
+//     input[type="number"] {
+//       width: 50%;
+//       padding: 0.9em;
+//       margin-bottom: 1em;
+//       border: 1px solid #ccc;
+//       border-radius: 50px;
+//     }
+
+//     .input-group {
+//       display: flex;
+//       justify-content: space-evenly;
+//       gap: 2em;
+//       width: 40%;
+
+//       .expiry-date-group,
+//       .cvv-group {
+//         display: flex;
+//         flex-direction: column;
+//         width: 48%;
+//       }
+
+//       .cvv-group {
+//         margin-left: 4%;
+//         margin-top: 1em; // Added margin-top for CVV input
+//       }
+
+//       input[type="text"],
+//       input[type="number"] {
+//         width: 100%;
+//         margin-top: 1em;
+//       }
+//     }
+
+//     .checkbox-group {
+//       display: flex;
+//       flex-direction: column;
+//       margin-bottom: 1em;
+
+//       input[type="checkbox"] {
+//         margin-right: 0.5em;
+//       }
+
+//       label {
+//         display: flex;
+//         align-items: center;
+//         margin-bottom: 0.5em;
+//       }
+//     }
+
+//     button {
+//       width: 11vw;
+//       padding: 0.75em;
+//       border: none;
+//       border-radius: 25px;
+//       background-color: #b4a911;
+//       color: #fff;
+//       font-size: 1em;
+//       cursor: pointer;
+//       transition: background-color 0.3s ease;
+
+//       &:hover {
+//         background-color: #555;
+//       }
+//     }
+//   }
+//   // // #card-element{
+//   // //   display: flex;
+//   // //   flex-direction: row;
+//   // //   gap:16px;
+//   // }
+
+//   @media (max-width: 768px) {
+//     grid-template-columns: 1fr;
+
+//     .card-section {
+//       margin-bottom: 2em;
+//       img {
+//         width: 80%;
+//       }
+//     }
+//   }
+
+//   @media (max-width: 480px) {
+//     padding: 1em;
+
+//     .card-section {
+//       img {
+//         width: 100%;
+//       }
+//     }
+
+//     .form-section {
+//       input[type="text"],
+//       input[type="number"] {
+//         width: 100%;
+//       }
+
+//       .input-group {
+//         flex-direction: column;
+
+//         .expiry-date-group,
+//         .cvv-group {
+//           width: 100%;
+//         }
+
+//         .cvv-group {
+//           margin-top: 1em; // Added margin-top for CVV input
+//         }
+
+//         input[type="text"],
+//         input[type="number"] {
+//           width: 100%;
+//           margin-bottom: 1em;
+//         }
+//       }
+//     }
+//   }
+// }
+// Payment.scss
+
+.Payment
+{
+  .payment-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.input-container {
+  margin-bottom: 20px;
+}
+
+.input-container label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.input-container input,
+.stripe-input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+
+.stripe-input {
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.split-input {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom:1em;
+  gap: 10px;
+}
+
+.split-input .stripe-input {
+  flex: 1;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  color: #d9534f;
+  background-color: #f2dede;
+}
+}
+
+@media (max-width: 600px) {
+  .payment-container {
+    padding: 15px;
   }
 
-  .form-section {
-    display: flex;
+  .split-input {
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-
-    label {
-      font-size: 1.2em;
-      font-weight: 500;
-      margin: 0.5em 0;
-    }
-
-    input[type="text"],
-    input[type="number"] {
-      width: 50%;
-      padding: 0.9em;
-      margin-bottom: 1em;
-      border: 1px solid #ccc;
-      border-radius: 50px;
-    }
-
-    .input-group {
-      display: flex;
-      justify-content: space-evenly;
-      gap: 2em;
-      width: 40%;
-
-      .expiry-date-group,
-      .cvv-group {
-        display: flex;
-        flex-direction: column;
-        width: 48%;
-      }
-
-      .cvv-group {
-        margin-left: 4%;
-        margin-top: 1em; // Added margin-top for CVV input
-      }
-
-      input[type="text"],
-      input[type="number"] {
-        width: 100%;
-        margin-top: 1em;
-      }
-    }
-
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 1em;
-
-      input[type="checkbox"] {
-        margin-right: 0.5em;
-      }
-
-      label {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.5em;
-      }
-    }
-
-    button {
-      width: 11vw;
-      padding: 0.75em;
-      border: none;
-      border-radius: 25px;
-      background-color: #b4a911;
-      color: #fff;
-      font-size: 1em;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #555;
-      }
-    }
   }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-
-    .card-section {
-      margin-bottom: 2em;
-      img {
-        width: 80%;
-      }
-    }
-  }
-
-  @media (max-width: 480px) {
-    padding: 1em;
-
-    .card-section {
-      img {
-        width: 100%;
-      }
-    }
-
-    .form-section {
-      input[type="text"],
-      input[type="number"] {
-        width: 100%;
-      }
-
-      .input-group {
-        flex-direction: column;
-
-        .expiry-date-group,
-        .cvv-group {
-          width: 100%;
-        }
-
-        .cvv-group {
-          margin-top: 1em; // Added margin-top for CVV input
-        }
-
-        input[type="text"],
-        input[type="number"] {
-          width: 100%;
-          margin-bottom: 1em;
-        }
-      }
-    }
+  .split-input .stripe-input {
+    margin-bottom: 10px;
   }
 }

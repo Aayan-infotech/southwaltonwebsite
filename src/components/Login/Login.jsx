@@ -29,7 +29,7 @@ const Login = () => {
       
       // Save token and user data to localStorage
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.data._id));
+      localStorage.setItem('user', response.data.data._id);
       
       alert('Login successful!');
       navigate('/home'); // Redirect to home or dashboard
@@ -41,7 +41,8 @@ const Login = () => {
   
 
   return (
-    <div className="login-container">
+   <div className='Payment'>
+     <div className="login-container">
       <h2>Log In</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -89,6 +90,7 @@ const Login = () => {
         <p><Link to="/forgot-password">Forgot Password?</Link></p>
       </div>
     </div>
+   </div>
   );
 };
 

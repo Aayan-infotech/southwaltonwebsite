@@ -1,12 +1,15 @@
 import React, { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Agreement.scss';
 
 
 const Agreement = () => {
   const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
+  
+  const navigate = useNavigate();
 
 
   const handleClear = () => {
@@ -38,6 +41,7 @@ const Agreement = () => {
         signatureData: signature 
       });
       alert('Signature saved successfully!');
+      navigate('/payment-type');
 
     } catch (error) {
       console.error('Error saving signature:', error.response ? error.response.data : error.message);
