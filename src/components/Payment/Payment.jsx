@@ -693,6 +693,191 @@
 // };
 
 // export default PaymentForm;
+// import React, { useState, useEffect } from 'react';
+// import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement, Elements } from '@stripe/react-stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+// import './Payment.scss';
+
+// const stripePromise = loadStripe('pk_test_51PsifGP6k3IQ77YBnQ4FXQCCb548b6cL50JVVuZxBRHqrkwxMfmcBTDGclAqwnVFiNtSvtNHgOPGxhJzlQjzrPPr00i340x8H3');
+
+// const CheckoutForm = () => {
+//     const stripe = useStripe();
+//     const elements = useElements();
+//     const navigate = useNavigate();
+//     const [loading, setLoading] = useState(false);
+//     const [email, setEmail] = useState('');
+//     const [phone, setPhone] = useState('');
+//     const [amount, setAmount] = useState('');
+//     const [message, setMessage] = useState('');
+//     const [error, setError] = useState('');
+//     const [transactionId, setTransactionId] = useState('');
+
+//     useEffect(() => {
+//         const fetchData = async () => {
+//             try {
+//                 // Fetch user details
+//                 const userId = localStorage.getItem('user');
+//                 if (userId) {
+//                     const userResponse = await axios.get(`http://3.111.163.2:5001/api/user/${userId}`);
+//                     setEmail(userResponse.data.data.email);
+//                     setPhone(userResponse.data.data.phone);
+//                 } else {
+//                     throw new Error('User ID not found');
+//                 }
+
+//                 // Fetch vehicle details
+//                 const vehicleId = localStorage.getItem('vehicle_Id');
+//                 if (vehicleId) {
+//                     const vehicleResponse = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+//                     setAmount(vehicleResponse.data.vprice);
+//                 } else {
+//                     throw new Error('Vehicle ID not found');
+//                 }
+//             } catch (err) {
+//                 console.error(err);
+//                 setError(err.message || 'An error occurred');
+//             }
+//         };
+
+//         fetchData();
+//     }, []);
+
+//     const sendPaymentDetails = async (transactionId, bookingId) => {
+//         try {
+//             console.log('Sending payment details:', { transactionId, bookingId, email, phone,amount });
+//             await axios.post('http://3.111.163.2:5001/api/pay/register', {
+//                 transactionId,
+//                 bookingId,
+//                 email,
+//                 phone,
+//                 amount
+//             });
+//             console.log('Payment details sent successfully.');
+//         } catch (error) {
+//             console.error('Error sending payment details:', error);
+//             setError('Failed to send payment details');
+//         }
+//     };
+
+//     const handleSubmit = async (event) => {
+//         event.preventDefault();
+//         if (!stripe || !elements) return;
+
+//         const cardNumberElement = elements.getElement(CardNumberElement);
+//         const cardExpiryElement = elements.getElement(CardExpiryElement);
+//         const cardCvcElement = elements.getElement(CardCvcElement);
+
+//         setLoading(true);
+ 
+//         try {
+//             // Create payment intent
+//             const { data } = await axios.post('http://3.111.163.2:5001/api/payment/create-payment-intent', {
+//                 amountInDollars: amount
+//             });
+
+//             const { clientSecret, transactionId } = data;
+
+//             // Confirm card payment
+//             const result = await stripe.confirmCardPayment(clientSecret, {
+//                 payment_method: {
+//                     card: cardNumberElement,
+//                     billing_details: { email }
+//                 }
+//             });
+
+//             if (result.error) {
+//                 setMessage(result.error.message);
+//             } else if (result.paymentIntent.status === 'succeeded') {
+//                 const bookingId = localStorage.getItem('user');
+//                 await sendPaymentDetails(transactionId, bookingId);
+
+//                 navigate('/payment-successfully', { state: { transactionId } });
+//             }
+//         } catch (error) {
+//             console.error('Error processing payment:', error);
+//             setMessage('Payment Failed.');
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     return (
+//         <form onSubmit={handleSubmit} className='Payment'>
+//             <div className="payment-container">
+//                 <div className="input-container">
+//                     <label htmlFor="email">Email</label>
+//                     <input
+//                         id="email"
+//                         type="email"
+//                         value={email}
+//                         onChange={(e) => setEmail(e.target.value)}
+//                         placeholder="Enter your email"
+//                         required
+//                     />
+//                 </div>
+
+//                 <div className="input-container">
+//                     <label htmlFor="amount">Amount (in USD)</label>
+//                     <input
+//                         id="amount"
+//                         type="number"
+//                         value={amount}
+//                         readOnly
+//                         placeholder="Amount will be fetched"
+//                     />
+//                 </div>
+
+//                 <div className="input-container">
+//                     <label>Card Number</label>
+//                     <div className="stripe-input">
+//                         <CardNumberElement
+//                             options={{ style: { base: { fontSize: '16px', color: '#424770', '::placeholder': { color: '#aab7c4' } }, invalid: { color: '#9e2146' } }}}
+//                         />
+//                     </div>
+//                 </div>
+
+//                 <div className="input-container">
+//                     <div className="split-input">
+//                         <label>Expiry Date</label>
+//                         <div className="stripe-input">
+//                             <CardExpiryElement
+//                                 options={{ style: { base: { fontSize: '16px', color: '#424770', '::placeholder': { color: '#aab7c4' } }, invalid: { color: '#9e2146' } }}}
+//                             />
+//                         </div>
+//                     </div>
+
+//                     <div className="split-input">
+//                         <label>CVC</label>
+//                         <div className="stripe-input">
+//                             <CardCvcElement
+//                                 options={{ style: { base: { fontSize: '16px', color: '#424770', '::placeholder': { color: '#aab7c4' } }, invalid: { color: '#9e2146' } }}}
+//                             />
+//                         </div>
+//                     </div>
+//                 </div>
+
+//                 <button type="submit" disabled={loading}>
+//                     {loading ? 'Processing...' : 'Pay'}
+//                 </button>
+
+//                 {message && <div className="message">{message}</div>}
+//                 {error && <div className="error">{error}</div>}
+//             </div>
+//         </form>
+//     );
+// };
+
+// const PaymentForm = () => {
+//     return (
+//         <Elements stripe={stripePromise}>
+//             <CheckoutForm />
+//         </Elements>
+//     );
+// };
+
+// export default PaymentForm;
 import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -700,7 +885,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Payment.scss';
 
-const stripePromise = loadStripe('pk_test_51PsifGP6k3IQ77YBnQ4FXQCCb548b6cL50JVVuZxBRHqrkwxMfmcBTDGclAqwnVFiNtSvtNHgOPGxhJzlQjzrPPr00i340x8H3');
+const stripePromise = loadStripe('pk_live_1J4rD8PvsNOx8XGyqNlVL0J0');
 
 const CheckoutForm = () => {
     const stripe = useStripe();
@@ -744,14 +929,15 @@ const CheckoutForm = () => {
         fetchData();
     }, []);
 
-    const sendPaymentDetails = async (transactionId, bookingId) => {
+    const sendPaymentDetails = async (transactionId, userId) => {
         try {
-            console.log('Sending payment details:', { transactionId, bookingId, email, phone });
+            console.log('Sending payment details:', { transactionId, userId, email, phone, amount });
             await axios.post('http://3.111.163.2:5001/api/pay/register', {
                 transactionId,
-                bookingId,
+                userId,
                 email,
-                phone
+                phone,
+                amount // Ensure amount is being sent here
             });
             console.log('Payment details sent successfully.');
         } catch (error) {
@@ -762,14 +948,17 @@ const CheckoutForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!stripe || !elements) return;
+        if (!stripe || !elements || !amount) {
+            setMessage('Stripe has not loaded or amount is missing.');
+            return;
+        }
 
         const cardNumberElement = elements.getElement(CardNumberElement);
         const cardExpiryElement = elements.getElement(CardExpiryElement);
         const cardCvcElement = elements.getElement(CardCvcElement);
 
         setLoading(true);
-
+ 
         try {
             // Create payment intent
             const { data } = await axios.post('http://3.111.163.2:5001/api/payment/create-payment-intent', {
@@ -789,8 +978,8 @@ const CheckoutForm = () => {
             if (result.error) {
                 setMessage(result.error.message);
             } else if (result.paymentIntent.status === 'succeeded') {
-                const bookingId = localStorage.getItem('user');
-                await sendPaymentDetails(transactionId, bookingId);
+                const userId = localStorage.getItem('user');
+                await sendPaymentDetails(transactionId, userId);
 
                 navigate('/payment-successfully', { state: { transactionId } });
             }
