@@ -1,64 +1,9 @@
-import React, { useRef, useState } from 'react';
-import SignatureCanvas from 'react-signature-canvas';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Agreement.scss';
-import Agree from './Agree';
+import React from 'react'
+import './Agree.scss'
 
-
-const Agreement = () => {
-  const sigCanvas = useRef(null);
-  const [signature, setSignature] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
-  
-  const navigate = useNavigate();
-
-
-  const handleClear = () => {
-    sigCanvas.current.clear();
-    setSignature('');
-  };
-
-  const handleSave = () => {
-    const dataURL = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png');
-    setSignature(dataURL);
-  };
-  const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!signature) {
-      alert('Please sign before submitting.');
-      return;
-    }
-
-    const userId = localStorage.getItem('user').replace(/"/g, '');
-    if (!userId) {
-      alert('User ID not found. Please log in again.');
-      return;
-    }
-
-    try {
-      await axios.post('http://3.111.163.2:5001/api/sign/save', { 
-        userId,
-        signatureData: signature 
-      });
-      alert('Signature saved successfully!');
-      navigate('/payment-type');
-
-    } catch (error) {
-      console.error('Error saving signature:', error.response ? error.response.data : error.message);
-    }
-  };
-
-  // mahi
-  return (
-    <>
-      <h1 style={{ textAlign: 'center' }}>Agreement</h1>
-      <div >
-      <div className='Agree'>
+const Agree = () => {
+    return (
+        <div className='Agree'>
             <div className='user-details'>
                 {/* <div className='first'>
                     <div className='name'>
@@ -87,15 +32,15 @@ const Agreement = () => {
                     at the designated drop-off location by 8 AM, an additional fee of $75 will be charged for the driver to
                     make a return trip.
                 </p>
-                {/* <div className='third'>
+                <div className='third'>
                     <p>
                         HOW MANY GUESTS WILL BE STAYING WITH YOU FROM THE AGE OF 16to 21?
                     </p>
                     <input type="number" class="flatline-input" />
-                </div> */}
+                </div>
             </div>
             <div className='aaa'>
-                <p>
+                <p >
                     The valid and collectible liability insurance and personal injury protection insurance of any authorized
                     rental or leasing driver shall serve as the primary coverage for the liability and personal injury protection
                     limits required under Sections 324.021(7) and 627.736 of the Florida Statutes. Failure to return rented
@@ -338,12 +283,7 @@ const Agreement = () => {
             </div>
 
             <div className='check'>
-                <input type="checkbox" 
-                    checked={isChecked}
-                    onChange={handleCheckboxChange}
-                  
-
-                    />
+                <input type="checkbox" />
                 <p>
                     I HAVE READ AND AGREE TO ALL GUIDELINES PUT IN PLACE IN THE ABOVE STATEMENT
                 </p>
@@ -370,10 +310,7 @@ const Agreement = () => {
             </div>
 
             <div className='check'>
-                <input type="checkbox" 
-                    checked={isChecked}
-                    onChange={handleCheckboxChange}
-                    />
+                <input type="checkbox" />
                 <p>
                     I have read and accepted all the fees above.
                 </p>
@@ -505,34 +442,7 @@ South Walton Carts does not refund for missed rental time due to issues with the
 
 
         </div>
-      </div>
+    )
+}
 
-      <div className="signature">
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="signature">Draw Your Signature</label><br />
-          
-          <SignatureCanvas
-            ref={sigCanvas}
-            penColor="black"
-            canvasProps={{ width: 500, height: 200, className: 'sigCanvas' }}
-          />
-          
-          <div className="button-group">
-            <button type="button" className="btn-clear" onClick={handleClear}>Clear</button>
-            <button type="button" className="btn-save" onClick={handleSave}>Save</button>
-            <button type="submit"  disabled={!isChecked}>Submit</button>
-          </div>
-        </form>
-
-        {signature && (
-          <div className="signature-preview">
-            <h3>Saved Signature:</h3>
-            <img src={signature} alt="Signature" />
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
-
-export default Agreement;
+export default Agree

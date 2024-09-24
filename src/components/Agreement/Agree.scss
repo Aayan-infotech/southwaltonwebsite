@@ -1,0 +1,254 @@
+// .Agree {
+//     width: 80%;
+//     margin: auto;
+//     font: Raleway;
+//     .user-details {
+      
+//     gap: 2em;
+//             .first {
+//                 display: flex;
+//                 gap: 2em;
+//                 margin: 2rem;
+
+//                 .name,
+//                 .email {
+//                     display: flex;
+//                     flex-direction: column;
+//                     gap: 2px;
+//                     input{
+//                         padding: 0.8em;
+//                         border: 1px solid #ccc;
+//                         border-radius: 4px; // Rounded corners for inputs
+//                         font-size: 1em;
+//                         outline: none;
+//                         transition: border 0.3s ease;
+
+//                         &:focus {
+//                             border-color: #007bff; // Border color on focus
+//                         }
+//                     }
+
+//                 }
+                
+//             }
+
+//             .second {
+//                 display: flex;
+//                 gap:2em;
+
+//                 .mobile,
+//                 .address {
+//                     display: flex;
+//                     flex-direction: column;
+//                     input {
+//                         padding: 0.8em;
+//                         border: 1px solid #ccc;
+//                         border-radius: 4px; // Rounded corners for inputs
+//                         font-size: 1em;
+//                         outline: none;
+//                         transition: border 0.3s ease;
+        
+//                         &:focus {
+//                             border-color: #007bff; // Border color on focus
+//                         }
+//                     }
+//                 }
+//             }
+
+//     .aa {
+//             color: red;
+//             width: 1119px;
+//             height: 84px;
+//             top: 547px;
+//             left: 214px;
+//             font-family: Raleway;
+//             font-size: 18px;
+//             font-weight: 400;
+//             line-height: 21.13px;
+//             text-align: left;
+//         }
+
+//         .third {
+//             display: flex;
+
+//             .flatline-input {
+//                 border: none;
+//                 border-bottom: 2px solid #000; /* Flatline style */
+//                 outline: none;
+//                 padding: 5px 10px;
+//                 font-size: 16px; /* Adjust font size as needed */
+//                 text-align: center; /* Center the text */
+//                 width: 200px; /* Adjust width as needed */
+//                 transition: border-color 0.3s ease; /* Smooth transition for border color */
+//             }
+            
+//             .flatline-input:focus {
+//                 border-bottom: 2px solid #007BFF; /* Change color on focus */
+//             }
+//         }
+//     }
+//     .check{
+//         display: flex;
+//     }
+
+// }
+
+.Agree {
+    width: 80%;
+    margin: auto;
+    font-family: Raleway, sans-serif; // Include fallback font
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20.7px;
+  letter-spacing: 0.10027121752500534px;
+  text-align: left;
+
+    .user-details {
+        // display: flex;
+        // flex-direction: column; // Stack .first and .second sections
+        // gap: 1em;
+
+    //     .first,
+    //     .second {
+    //         display: flex;
+    //         justify-content: center; // Center the row elements
+    //         gap: 2em; // Space between name, email, mobile, and address
+    //         margin: 2rem auto; // Center the .first and .second sections
+    //         width: 100%; // Full width of the container
+    //         max-width: 1000px; // Limit the width of the form for larger screens
+    //     }
+
+    //     .first div,
+    //     .second div {
+    //         display: flex;
+    //         flex-direction: column;
+    //         align-items: flex-start; // Align the labels and inputs to the left
+    //         text-align: left;
+    //         width: 100%; // Make the div take full width within the flex container
+    //         max-width: 300px; // Set a max width for each input container for better alignment
+
+    //         label {
+    //             font-weight: 600; // Make the label bold
+    //             margin-bottom: 0.5em; // Space below the label
+    //         }
+
+    //         input {
+    //             width: 100%; // Full width within its container
+    //             box-sizing: border-box; // Include padding in width
+    //             padding: 0.8em;
+    //             border: 1px solid #ccc;
+    //             border-radius: 4px; // Rounded corners for inputs
+    //             font-size: 1em;
+    //             outline: none;
+    //             transition: border 0.3s ease;
+
+    //             &:focus {
+    //                 border-color: #007bff; // Border color on focus
+    //             }
+    //         }
+    //     }
+     }
+
+    .aa {
+        color: red;
+        width: 100%;
+         // Limit width to prevent overflow on small screens
+        // padding: 1em; // Add padding for better spacing
+        font-family: Raleway, sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.2; // Line height for better readability
+        text-align: left;
+    }
+
+    .third {
+        display: flex;
+        // justify-content: center; // Center the third section
+
+        .flatline-input {
+            border: none;
+            border-bottom: 2px solid #000; /* Flatline style */
+            outline: none;
+            padding: 5px 10px;
+            font-size: 16px; /* Adjust font size as needed */
+            text-align: center; /* Center the text */
+            width: 200px; /* Adjust width as needed */
+            transition: border-color 0.3s ease; /* Smooth transition for border color */
+        }
+
+        .flatline-input:focus {
+            border-bottom: 2px solid #007BFF; /* Change color on focus */
+        }
+    }
+
+    .check {
+        display: flex;
+        
+        gap: 1em;
+        font-weight: bold; // Space between check elements
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 90%; // Increase width for smaller screens
+        .user-details {
+            gap: 1.5em; // Reduce gap for smaller screens
+
+            .first,
+            .second {
+                flex-wrap: wrap; // Allow inputs to wrap in small screens
+                justify-content: center; // Center the elements in the flex container
+                gap: 1em; // Reduce gap between inputs
+                margin: 0; // Remove margin on smaller screens
+            }
+
+            .first div,
+            .second div {
+                max-width: 100%; // Full width for each input container on small screens
+                flex-basis: 48%; // Take approximately half the container width
+            }
+        }
+
+        .aa {
+            font-size: 16px; // Reduce font size for smaller screens
+        }
+       
+
+        .third {
+            flex-direction: column; // Stack the third section elements
+            gap: 1em; // Space between elements
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        width: 100%; // Full width for very small screens
+
+        .user-details {
+            .first,
+            .second {
+                gap: 1em; // Further reduce gap for small screens
+
+                div {
+                    width: 100%; // Full width for input containers
+                    max-width: 100%; // Full width for smaller screens
+                }
+
+                input {
+                    max-width: 100%; // Full width for inputs
+                }
+            }
+        }
+
+        .aa {
+            font-size: 14px; // Smaller font size
+        }
+
+        .third {
+            .flatline-input {
+                width: 100%; // Full width for input
+            }
+        }
+    }
+    .aaa p{
+        font-family: Raleway;font-size: 22.13px;font-weight: 700;line-height: 25.98px;letter-spacing: 0.03317955881357193px;text-align: left;
+    }
+}

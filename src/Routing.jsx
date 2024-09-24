@@ -32,6 +32,7 @@ import DownloadApp from "./components/DownloadApp/DownloadApp";
 import PaymentSuccessfully from "./components/PaymentSuccessfully/PaymentSuccessfully";
 import Popup from "./components/Popup/Popup";
 import Contact from "./components/ContactUs/Contact";
+import Agree from "./components/Agreement/Agree";
 
 function Routing() {
     return (
@@ -72,6 +73,7 @@ function Routing() {
             <Route path="/payment-successfully" element={<PaymentSuccessfully />} />
             <Route path="/popup" element={<Popup/>} />
             <Route path="/contact" element={<Contact/>} />
+            <Route path="/agree" element={<Agree/>} />
 
           </Routes>
           <Footer/>
