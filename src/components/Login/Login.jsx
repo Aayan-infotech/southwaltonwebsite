@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Login.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import OR from './img/OR.png';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +14,7 @@ const Login = () => {
   }); 
   const [error, setError] = useState('');
   const navigate = useNavigate(); 
-                           
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -24,76 +26,84 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send POST request to login endpoint
-      const response = await axios.post('http://3.111.163.2:5001/api/auth/login', formData);
+      setError('');
       
-      // Save token and user data to localStorage
+      const response = await axios.post('http://44.196.192.232:5001/api/auth/login', formData);
+      
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', response.data.data._id);
       
-      alert('Login successful!');
-      navigate('/home'); // Redirect to home or dashboard
+      toast.success('Login successful!');
+
+      setTimeout(() => {
+        navigate('/home');
+      }, 1000); 
     } catch (error) {
       console.error('There was an error logging in!', error);
-      setError('Login failed. Please check your credentials and try again.');
+      
+      if (error.response && error.response.data) {
+        setError(error.response.data.message || 'Login failed. Please try again.');
+      } else {
+        setError('Login failed. Please check your credentials and try again.');
+      }
+      
+      toast.error('Login failed. Please check your credentials and try again.');
     }
   };
-  
 
   return (
-   <div className='Payment'>
-     <div className="login-container">
-      <h2>Log In</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email"><i className="fa-solid fa-envelope" /> Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+    <div className='Payment'>
+      <div className="login-container">
+        <h2>Log In</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email"><i className="fa-solid fa-envelope" /> Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password"><i className="fa-solid fa-lock" /> Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* <div className="form-group remember-me">
+            <input
+              type="checkbox"
+              id="remember-me"
+              name="rememberMe"
+              checked={formData.rememberMe}
+              onChange={handleChange}
+            />
+            <label htmlFor="remember-me">Remember Me</label>
+          </div> */}
+          {error && <p className="error">{error}</p>}
+          <div className="login-button">
+            <button type="submit">Login</button>
+          </div>
+        </form>
+        <div className="additional-options">
+          <p>Not have any account? <Link to="/sign-up">Sign Up</Link></p>
+          <img src={OR} alt="Or separator" />
+          <p><Link to="/forgot-password">Forgot Password?</Link></p>
         </div>
-        <div className="form-group">
-          <label htmlFor="password"><i className="fa-solid fa-lock" /> Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group remember-me">
-          <input
-            type="checkbox"
-            id="remember-me"
-            name="rememberMe"
-            checked={formData.rememberMe}
-            onChange={handleChange}
-          />
-          <label htmlFor="remember-me">Remember Me</label>
-        </div>
-        {error && <p className="error">{error}</p>}
-        <div className="login-button">
-          <button type="submit">Login</button>
-        </div>
-      </form>
-      <div className="additional-options">
-        <p>Not have any account? <Link to="/sign-up">Sign Up</Link></p>
-        <img src={OR} alt="Or separator" />
-        <p><Link to="/forgot-password">Forgot Password?</Link></p>
       </div>
+      <ToastContainer /> {/* Ensure this is present */}
     </div>
-   </div>
   );
 };
 
 export default Login;
-
-

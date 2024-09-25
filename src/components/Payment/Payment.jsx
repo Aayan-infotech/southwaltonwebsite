@@ -30,7 +30,7 @@
 //     }
 
 //     try {
-//       const response = await axios.get(`http://3.111.163.2:5001/api/user/${userId}`);
+//       const response = await axios.get(`http://44.196.192.232:5001/api/user/${userId}`);
 //       console.log("response", response);
 //       setEmail(response.data.data.email); // Assuming your API returns an object with an `email` field
 //     } catch (err) {
@@ -52,7 +52,7 @@
 //     }
 
 //     try {
-//       const response = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+//       const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
 //       console.log("vehicle response", response);
 //       setAmount(response.data.vprice); // Assuming your API returns an object with a `price` field
 //     } catch (err) {
@@ -77,7 +77,7 @@
 //     setLoading(true);
 
 //     try {
-//       const { data } = await axios.post('http://3.111.163.2:5001/api/payment/create-payment-intent', {
+//       const { data } = await axios.post('http://44.196.192.232:5001/api/payment/create-payment-intent', {
 //         amountInDollars: amount
 //       });
 
@@ -253,7 +253,7 @@
 //         }
 
 //         try {
-//             const response = await axios.get(`http://3.111.163.2:5001/api/user/${userId}`);
+//             const response = await axios.get(`http://44.196.192.232:5001/api/user/${userId}`);
 //             setEmail(response.data.data.email);
 //         } catch (err) {
 //             console.error('Error fetching user details:', err);
@@ -271,7 +271,7 @@
 //         }
 
 //         try {
-//             const response = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+//             const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
 //             setAmount(response.data.vprice);
 //         } catch (err) {
 //             console.error('Error fetching vehicle details:', err);
@@ -295,7 +295,7 @@
 //         setLoading(true);
 
 //         try {
-//             const { data } = await axios.post('http://3.111.163.2:5001/api/payment/create-payment-intent', {
+//             const { data } = await axios.post('http://44.196.192.232:5001/api/payment/create-payment-intent', {
 //                 amountInDollars: amount
 //             });
 
@@ -475,7 +475,7 @@
 //         }
 
 //         try {
-//             const response = await axios.get(`http://3.111.163.2:5001/api/user/${userId}`);
+//             const response = await axios.get(`http://44.196.192.232:5001/api/user/${userId}`);
 //             setEmail(response.data.data.email);
 //             setPhone(response.data.data.phone); 
 //         } catch (err) {
@@ -495,7 +495,7 @@
 //         }
 
 //         try {
-//             const response = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+//             const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
 //             setAmount(response.data.vprice);
 //         } catch (err) {
 //             console.error('Error fetching vehicle details:', err);
@@ -512,7 +512,7 @@
 //     const sendPaymentDetails = async (transactionId, bookingId, email, phone) => {
 //         try {
 //             console.log('Sending payment details:', { transactionId, bookingId, email, phone }); // Debugging log
-//             await axios.post('http://3.111.163.2:5001/api/pay/register', {
+//             await axios.post('http://44.196.192.232:5001/api/pay/register', {
 //                 transactionId,
 //                 bookingId,
 //                 email,
@@ -537,7 +537,7 @@
 
 //         try {
 //             // Create payment intent
-//             const { data } = await axios.post('http://3.111.163.2:5001/api/payment/create-payment-intent', {
+//             const { data } = await axios.post('http://44.196.192.232:5001/api/payment/create-payment-intent', {
 //                 amountInDollars: amount
 //             });
 
@@ -720,7 +720,7 @@
 //                 // Fetch user details
 //                 const userId = localStorage.getItem('user');
 //                 if (userId) {
-//                     const userResponse = await axios.get(`http://3.111.163.2:5001/api/user/${userId}`);
+//                     const userResponse = await axios.get(`http://44.196.192.232:5001/api/user/${userId}`);
 //                     setEmail(userResponse.data.data.email);
 //                     setPhone(userResponse.data.data.phone);
 //                 } else {
@@ -730,7 +730,7 @@
 //                 // Fetch vehicle details
 //                 const vehicleId = localStorage.getItem('vehicle_Id');
 //                 if (vehicleId) {
-//                     const vehicleResponse = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+//                     const vehicleResponse = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
 //                     setAmount(vehicleResponse.data.vprice);
 //                 } else {
 //                     throw new Error('Vehicle ID not found');
@@ -747,7 +747,7 @@
 //     const sendPaymentDetails = async (transactionId, bookingId) => {
 //         try {
 //             console.log('Sending payment details:', { transactionId, bookingId, email, phone,amount });
-//             await axios.post('http://3.111.163.2:5001/api/pay/register', {
+//             await axios.post('http://44.196.192.232:5001/api/pay/register', {
 //                 transactionId,
 //                 bookingId,
 //                 email,
@@ -773,7 +773,7 @@
  
 //         try {
 //             // Create payment intent
-//             const { data } = await axios.post('http://3.111.163.2:5001/api/payment/create-payment-intent', {
+//             const { data } = await axios.post('http://44.196.192.232:5001/api/payment/create-payment-intent', {
 //                 amountInDollars: amount
 //             });
 
@@ -905,7 +905,7 @@ const CheckoutForm = () => {
                 // Fetch user details
                 const userId = localStorage.getItem('user');
                 if (userId) {
-                    const userResponse = await axios.get(`http://3.111.163.2:5001/api/user/${userId}`);
+                    const userResponse = await axios.get(`http://44.196.192.232:5001/api/user/${userId}`);
                     setEmail(userResponse.data.data.email);
                     setPhone(userResponse.data.data.phone);
                 } else {
@@ -915,7 +915,7 @@ const CheckoutForm = () => {
                 // Fetch vehicle details
                 const vehicleId = localStorage.getItem('vehicle_Id');
                 if (vehicleId) {
-                    const vehicleResponse = await axios.get(`http://3.111.163.2:5001/api/vehicle/vehicles/${vehicleId}`);
+                    const vehicleResponse = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
                     setAmount(vehicleResponse.data.vprice);
                 } else {
                     throw new Error('Vehicle ID not found');
@@ -932,7 +932,7 @@ const CheckoutForm = () => {
     const sendPaymentDetails = async (transactionId, userId) => {
         try {
             console.log('Sending payment details:', { transactionId, userId, email, phone, amount });
-            await axios.post('http://3.111.163.2:5001/api/pay/register', {
+            await axios.post('http://44.196.192.232:5001/api/pay/register', {
                 transactionId,
                 userId,
                 email,
@@ -961,7 +961,7 @@ const CheckoutForm = () => {
  
         try {
             // Create payment intent
-            const { data } = await axios.post('http://3.111.163.2:5001/api/payment/create-payment-intent', {
+            const { data } = await axios.post('http://44.196.192.232:5001/api/payment/create-payment-intent', {
                 amountInDollars: amount
             });
 
