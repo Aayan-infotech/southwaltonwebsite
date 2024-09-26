@@ -276,7 +276,7 @@ import { useNavigate } from 'react-router-dom';
 
 const fetchVehicledata = async (setCardDetails, setError) => {
   try {
-    const response = await axios.get('http://44.196.192.232:5001/api/vehicle/');
+    const response = await axios.get('http://44.196.192.232:8132/api/vehicle/');
     setCardDetails(response.data);
   } catch (error) {
     setError('Error fetching details');
