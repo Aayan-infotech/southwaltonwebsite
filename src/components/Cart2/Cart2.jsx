@@ -293,7 +293,7 @@ const changecartstatus = async (id, status) => {
 };
 
 const Card = ({ image, passengers, model, price, id, status, onChoose }) => {
-  const imageUrl = image ? `http://44.196.192.232:5001/uploads/${image}` : Group3;
+  const imageUrl = image ? `${image}` : Group3;
 
   return (
     <div className="card-cart2">

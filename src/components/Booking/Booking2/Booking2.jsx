@@ -85,7 +85,7 @@ const CombinedComponent = () => {
 
   const fetchModels = async () => {
     try {
-      const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/`);
+      const response = await axios.get(`http://44.196.192.232:8132/api/vehicle/`);
       console.log('response', response.data);
       setModels(response.data);
     } catch (error) {
@@ -130,7 +130,7 @@ const CombinedComponent = () => {
           return (
             <div key={model.id} className="cart-model">
               <div className="cart-card">
-                <img src={`http://44.196.192.232:5001/uploads/${model.image}`} alt={model.vname} className="cart-image" />
+                <img src={`${model.image}`} alt={model.vname} className="cart-image" />
                 <div className="cart-details">
                   <div className="cart-passengers">{model.vseats} Passengers</div>
                   <div className="cart-name">{model.vname}</div>
