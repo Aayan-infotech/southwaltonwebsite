@@ -74,12 +74,12 @@ const InvoiceDetails = () => {
         <p><strong>Email</strong> : {email}</p>
         <p><strong>Amount Paid</strong> : ${price}</p>
         <p><strong>Transaction ID</strong> : {transactionId || 'N/A'}</p>
-        <Link to='/agreement'>
+        {/* <Link to='/agreement'>
           <button className="invoice-button"><i className="fa-solid fa-file-invoice"></i> Invoice</button>
-        </Link>
+        </Link> */}
       </div>
     </div>
-  );
-};
+    );
+  };
 
 export default InvoiceDetails;

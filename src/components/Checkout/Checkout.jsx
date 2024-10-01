@@ -311,6 +311,7 @@
     const [formData, setFormData] = useState({
       bname: '',
       bphone: '',
+      vehiclesId:'',
       bemail: '',
       bsize: '',
       baddress: '',
@@ -351,7 +352,9 @@
         console.log('API response data:', data); // Verify the data structure
         setFormData(prevData => ({
           ...prevData,
+          vehiclesId: vehicleId,
           bsize: data.vseats
+          
         }));
       } catch (error) {
         console.log("Error fetching vehicle details", error);
