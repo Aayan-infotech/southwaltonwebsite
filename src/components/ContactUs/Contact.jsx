@@ -73,7 +73,7 @@ const Contact = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className='time'>
+                        {/* <div className='time'>
                             <div>
                                 <p>Start Time</p>
                                 <input
@@ -94,7 +94,7 @@ const Contact = () => {
                                     onChange={handleChange}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div className='fields'>
                             <p>Comments</p>
                             <textarea

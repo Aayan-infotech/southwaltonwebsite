@@ -1,7 +1,7 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Change.scss';
-import { useNavigate , useLocation  } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Change = () => {
   const [password, setPassword] = useState('');
@@ -11,29 +11,29 @@ const Change = () => {
   const location = useLocation();
   // const resetToken = location.state?.resetToken; 
 
-  const queryParams = new URLSearchParams(location.search);
-  const resetToken = queryParams.get('token') || location.state?.resetToken; // Handle token from URL or state
+
+  const email = location.state?.email; // Handle token from URL or state
 
   useEffect(() => {
-    if (!resetToken) {
+    if (!email) {
       setMessage('Reset token is missing or invalid.');
     }
-  }, [resetToken]);
+  }, [email]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (password !== confirmPassword) {
       setMessage('Passwords do not match.');
       return;
     }
-  
+
     try {
       const response = await axios.post('http://44.196.192.232:5001/api/auth/resetPassword', {
-        token: resetToken,
+      email:  email,
         password,
       });
-  
+
       if (response.status === 200) {
         setMessage('Password reset successfully!');
         navigate('/login');
@@ -45,7 +45,7 @@ const Change = () => {
       setMessage('Error resetting password. Please try again.');
     }
   };
-  
+
 
 
   return (

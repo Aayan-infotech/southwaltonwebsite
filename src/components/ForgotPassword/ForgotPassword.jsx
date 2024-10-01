@@ -30,7 +30,7 @@ const ForgotPassword = () => {
       
       if (response.status === 200) {
         // Redirect to resetPassword page with token as a query parameter
-        navigate('/change-password', { state: { resetToken: response.data.resetToken } });
+        navigate('/change-password', { state: { email:email } });
       }
     } catch (error) {
       setMessage('Invalid or expired OTP. Please try again.');
