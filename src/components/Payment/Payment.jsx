@@ -885,7 +885,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Payment.scss';
 
-const stripePromise = loadStripe('pk_live_1J4rD8PvsNOx8XGyqNlVL0J0');
+const stripePromise = loadStripe('pk_test_51PsifGP6k3IQ77YBcNp5UT4dfveEftKvOvirubtf9xPBEfp2Uu3K5L5bOO9OjoJCQhaAzNqWIsY7fWmkKOHlvKaZ00A04yTHB6');
 
 const CheckoutForm = () => {
     const stripe = useStripe();
