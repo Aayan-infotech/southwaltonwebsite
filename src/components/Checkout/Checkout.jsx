@@ -418,6 +418,10 @@
         });
 
         if (response.ok) {
+          const result = await response.json();  // Parse the response JSON to get the ID
+          console.log('bookid ',result.id);
+          
+          localStorage.setItem('bookFormId', result.id);
           navigate('/agreement');
         } else {
           console.error('Failed to save booking data');
