@@ -8,15 +8,15 @@ const HomeSection1 = () => {
     <div className='home1'>
       <div className="image-container">
         <img src={homebg2} alt="Background" className="background-image" />
-        {/* <div className="home1-btn">
+        <div className="home1-btn">
           <button>
-            <Link to ='/cart' style={{textDecoration:"none", color:"black"}}>
+            <Link to ='/home3' style={{textDecoration:"none", color:"black"}}>
               Reserve A Cart
             </Link>
           </button>
-        </div> */}
+        </div>
       </div>
-    </div>
+    </div> 
   );
 }
 

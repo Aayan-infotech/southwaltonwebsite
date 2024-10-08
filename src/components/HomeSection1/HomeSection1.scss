@@ -58,7 +58,6 @@
 // }
 .home1 {
   .image-container {
-  
     overflow: hidden;
     top: 0;
 
@@ -74,24 +73,24 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      bottom: 5%;
+      bottom: -13%;
       left: 0;
       z-index: 10; // Ensure button is above other content
 
       button {
-        width: 225px;
-        height: 62px;
+        width: 255px;
+        height: 72px;
         opacity: 1;
         font-family: Raleway, sans-serif;
         font-size: 26.9px;
-        font-weight: 500;
+        font-weight: 600;
         line-height: 52.11px;
         letter-spacing: 0.1px;
         text-align: center;
-        border: 1px solid black;
+        background-color: transparent; // Set to transparent
+        border: 2px solid black;
         border-radius: 50px;
         padding: 0.2em;
-        background-color: #ffffffd7;
         cursor: pointer;
         z-index: 10; // Ensure button text is above background
       }
