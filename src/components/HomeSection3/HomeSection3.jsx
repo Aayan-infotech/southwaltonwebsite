@@ -230,21 +230,24 @@
 // };
 
 // export default CartDetails;
-import React, { useState, useRef, useEffect, useCallback,useNavigate } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './HomeSection3.scss';
 import { Autocomplete, useLoadScript } from '@react-google-maps/api';
+import { useNavigate } from 'react-router-dom';
 
 const libraries = ['places'];
-m 
+
 const CartDetails = () => {
     const [deliveryLocation, setDeliveryLocation] = useState('');
     const [pickupLocation, setPickupLocation] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [numOfDays, setNumOfDays] = useState(0); // State for number of days
+    const [numOfDays, setNumOfDays] = useState(0);
 
     const deliveryRef = useRef(null);
     const pickupRef = useRef(null);
+
+    const navigate = useNavigate();
 
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: 'AIzaSyAHWgq2_Us0Dq7UcVoP4FRGYcDqDh6XH_M',
@@ -255,7 +258,7 @@ const CartDetails = () => {
         if (ref.current) {
             const place = ref.current.getPlace();
             if (place) {
-                const address = place.formatted_address || place.name; // Get either formatted address or place name
+                const address = place.formatted_address || place.name;
                 if (field === 'delivery') {
                     setDeliveryLocation(address);
                 } else if (field === 'pickup') {
@@ -266,96 +269,179 @@ const CartDetails = () => {
     }, []);
 
     const calculateDaysBetween = (start, end) => {
-        if (!start || !end) return 0; // Return 0 if either date is not set
+        if (!start || !end) return 0;
         const startDateObj = new Date(start);
         const endDateObj = new Date(end);
-        const differenceInTime = endDateObj - startDateObj; // Difference in milliseconds
-        const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24)); // Convert to days
-        return differenceInDays >= 0 ? differenceInDays : 0; // Ensure non-negative
+        const differenceInTime = endDateObj - startDateObj;
+        const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+        return differenceInDays >= 0 ? differenceInDays : 0;
     };
 
     useEffect(() => {
         const days = calculateDaysBetween(startDate, endDate);
-        setNumOfDays(days); // Update state with the calculated number of days
-    }, [startDate, endDate]); // Run whenever startDate or endDate changes
+        setNumOfDays(days);
+    }, [startDate, endDate]);
 
+    // const handleFindCartClick = async () => {
+    //     // Create the payload to send to the API
+    //     const data = {
+    //         pickup: pickupLocation,
+    //         drop: deliveryLocation,
+    //         pickdate: startDate,
+    //         dropdate: endDate,
+    //         days: numOfDays.toString(), // Ensure that days are sent as a string
+    //     };
+
+    //     try {
+    //         // POST request to the API
+    //         const response = await fetch('http://localhost:5001/api/reserve/reservation', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(data),
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Failed to submit reservation');
+    //         }
+
+    //         const result = await response.json();
+
+    //         // Extract reservation ID from the result and store it in localStorage
+    //         const { reserveId } = result;
+    //         if (reserveId) {
+    //             localStorage.setItem('reservationId', reserveId);
+    //             console.log('Reservation ID stored in localStorage:', reserveId);
+    //         }
+    //         else{
+    //             console.log('reserveid  not found');
+                
+    //         }
+
+    //         console.log('Reservation successful:', result);
+
+    //         // Redirect to another page after successful reservation
+    //         navigate('/cart'); // Adjust the path if needed
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    // };
+    const handleFindCartClick = async () => {
+        // Create the payload to send to the API
+        const data = {
+            pickup: pickupLocation,
+            drop: deliveryLocation,
+            pickdate: startDate,
+            dropdate: endDate,
+            days: numOfDays.toString(),
+        };
+    
+        try {
+            // POST request to the API
+            const response = await fetch('http://localhost:5001/api/reserve/reservation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to submit reservation');
+            }
+    
+            const result = await response.json();
+            console.log('API response:', result); // Log the full response
+    
+            // Extract reservation ID from the result and store it in localStorage
+            const { id } = result;
+            if (id) {
+                localStorage.setItem('reservationId', id);
+                
+            } else {
+                console.log('reserveId not found in the response');
+            }
+    
+            console.log('Reservation successful:', result);
+    
+            // Redirect to another page after successful reservation
+            navigate('/cart');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    
     if (loadError) return <div>Error loading maps: {loadError.message}</div>;
     if (!isLoaded) return <div>Loading Maps...</div>;
 
     return (
         <>
             <div className='kk'>
-            <div className="home3-header">
-                <u><h1>CART DETAILS</h1></u>
-            </div>
-            <div className="home3-details">
-                <div className="location-input">
-                    <div className="input-wrapper">
-                        <label><i className="fa-solid fa-location-dot"></i> Delivery</label>
-                        <Autocomplete
-                            onLoad={(ref) => deliveryRef.current = ref}
-                            onPlaceChanged={() => handlePlaceChanged('delivery', deliveryRef)}
-                        >
-                            <input
-                                type="text"
-                                placeholder="Enter Your Delivery Location"
-                                value={deliveryLocation}
-                                onChange={(e) => setDeliveryLocation(e.target.value)}
-                            />
-                        </Autocomplete>
-                    </div>
-                    <div className="input-wrapper">
-                        <label><i className="fa-solid fa-location-dot"></i> Pickup</label>
-                        <Autocomplete
-                            onLoad={(ref) => pickupRef.current = ref}
-                            onPlaceChanged={() => handlePlaceChanged('pickup', pickupRef)}
-                        >
-                            <input
-                                type="text"
-                                placeholder="Enter Your Pickup Location"
-                                value={pickupLocation}
-                                onChange={(e) => setPickupLocation(e.target.value)}
-                            />
-                        </Autocomplete>
-                    </div>
+                <div className="home3-header">
+                    <u><h1>CART DETAILS</h1></u>
                 </div>
+                <div className="home3-details">
+                    <div className="location-input">
+                        <div className="input-wrapper">
+                            <label><i className="fa-solid fa-location-dot"></i> Delivery</label>
+                            <Autocomplete
+                                onLoad={(ref) => deliveryRef.current = ref}
+                                onPlaceChanged={() => handlePlaceChanged('delivery', deliveryRef)}
+                            >
+                                <input
+                                    type="text"
+                                    placeholder="Enter Your Delivery Location"
+                                    value={deliveryLocation}
+                                    onChange={(e) => setDeliveryLocation(e.target.value)}
+                                />
+                            </Autocomplete>
+                        </div>
+                        <div className="input-wrapper">
+                            <label><i className="fa-solid fa-location-dot"></i> Pickup</label>
+                            <Autocomplete
+                                onLoad={(ref) => pickupRef.current = ref}
+                                onPlaceChanged={() => handlePlaceChanged('pickup', pickupRef)}
+                            >
+                                <input
+                                    type="text"
+                                    placeholder="Enter Your Pickup Location"
+                                    value={pickupLocation}
+                                    onChange={(e) => setPickupLocation(e.target.value)}
+                                />
+                            </Autocomplete>
+                        </div>
+                    </div>
 
-                <div className="date-input">
-                    <div className="date-wrapper">
-                        <label><i className="fa-regular fa-calendar-days"></i> Start Date</label>
-                        <input
-                            type="date"
-                            className="date-box"
-                            id="startDate"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                        />
+                    <div className="date-input">
+                        <div className="date-wrapper">
+                            <label><i className="fa-regular fa-calendar-days"></i> Start Date</label>
+                            <input
+                                type="date"
+                                className="date-box"
+                                id="startDate"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                            />
+                        </div>
+                        <div className="date-wrapper">
+                            <label><i className="fa-regular fa-calendar-days"></i> End Date</label>
+                            <input
+                                type="date"
+                                className="date-box"
+                                id="endDate"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        </div>
                     </div>
-                    <div className="date-wrapper">
-                        <label><i className="fa-regular fa-calendar-days"></i> End Date</label>
-                        <input
-                            type="date"
-                            className="date-box"
-                            id="endDate"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                        />
-                    </div>
+
                 </div>
-
-                {/* Display the number of days
-                <div className="days-count">
-                    <p>Number of Days: {numOfDays}</p>
-                </div> */}
-              
-            </div>
-            <div className='pp'>
-                <button>
-                <i class="fa-solid fa-magnifying-glass"></i>
-                    Find Cart
+                <div className='pp'>
+                    <button onClick={handleFindCartClick}>
+                        <i className="fa-solid fa-magnifying-glass"></i> Find Cart
                     </button>
-            </div>
-
+                </div>
             </div>
         </>
     );
