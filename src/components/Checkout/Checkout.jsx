@@ -43,7 +43,7 @@
   //         return;
   //       }
 
-  //       const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
+  //       const response = await axios.get(`http://localhost:5001/api/vehicle/vehicles/${vehicleId}`);
   //       const data = response.data;
   //       console.log('API response data:', data); // Verify the data structure
   //       setSize(data.vseats);
@@ -105,7 +105,7 @@
   //     e.preventDefault();
 
   //     try {
-  //       const response = await fetch('http://44.196.192.232:5001/api/book/create', {
+  //       const response = await fetch('http://localhost:5001/api/book/create', {
   //         method: 'POST',
   //         headers: {
   //           'Content-Type': 'application/json'
@@ -347,7 +347,7 @@
           return;
         }
 
-        const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
+        const response = await axios.get(`http://localhost:5001/api/vehicle/vehicles/${vehicleId}`);
         const data = response.data;
         console.log('API response data:', data); // Verify the data structure
         setFormData(prevData => ({
@@ -409,7 +409,7 @@
       e.preventDefault();
 
       try {
-        const response = await fetch('http://44.196.192.232:5001/api/book/create', {
+        const response = await fetch('http://localhost:5001/api/book/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -451,8 +451,8 @@
           <div className="home3-details">
             <div className="location-input">
             <div className="input-wrapper">
-    <label><i className="fa-solid fa-location-dot"></i> Delivery</label>
-    <Autocomplete 
+    {/* <label><i className="fa-solid fa-location-dot"></i> Delivery</label> */}
+    {/* <Autocomplete 
       onLoad={(ref) => deliveryRef.current = ref} 
       onPlaceChanged={() => handlePlaceChanged('bdrop', deliveryRef)} // Update this key to 'bdrop'
     >
@@ -463,10 +463,10 @@
         value={formData.bdrop}  // Update the value to use formData.bdrop
         onChange={handleInputChange}
       />
-    </Autocomplete>
+    </Autocomplete> */}
   </div>
   <div className="input-wrapper">
-    <label><i className="fa-solid fa-location-dot"></i> Pickup</label>
+    {/* <label><i className="fa-solid fa-location-dot"></i> Pickup</label>
     <Autocomplete 
       onLoad={(ref) => pickupRef.current = ref} 
       onPlaceChanged={() => handlePlaceChanged('bpickup', pickupRef)} // Update this key to 'bpickup'
@@ -478,11 +478,11 @@
         value={formData.bpickup}  // Update the value to use formData.bpickup
         onChange={handleInputChange}
       />
-    </Autocomplete>
+    </Autocomplete> */}
   </div>
             </div>
 
-            <div className="dates">
+            {/* <div className="dates">
               <div className="date-1">
                 <label><i className="fa-regular fa-calendar-days"></i>Start Date</label>
                 <input
@@ -503,7 +503,7 @@
                   onChange={handleInputChange}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="form-grid">

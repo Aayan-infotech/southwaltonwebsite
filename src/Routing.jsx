@@ -33,6 +33,7 @@ import PaymentSuccessfully from "./components/PaymentSuccessfully/PaymentSuccess
 import Popup from "./components/Popup/Popup";
 import Contact from "./components/ContactUs/Contact";
 import Agree from "./components/Agreement/Agree";
+import Reserve from "./Resserve/Reserve";
 
 function Routing() {
     return (
@@ -74,6 +75,7 @@ function Routing() {
             <Route path="/popup" element={<Popup/>} />
             <Route path="/contact" element={<Contact/>} />
             <Route path="/agree" element={<Agree/>} />
+            <Route path="/reserve" element={<Reserve/>} />
 
           </Routes>
           <Footer/>
