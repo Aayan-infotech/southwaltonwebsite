@@ -464,7 +464,7 @@ const Cart2 = () => {
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
     const navigate = useNavigate();
-
+  
     useEffect(() => {
         fetchVehicledata(setCardDetails, setError);
     }, []);
@@ -518,3 +518,4 @@ const Cart2 = () => {
 };
 
 export default Cart2;
+   
