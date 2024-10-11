@@ -234,6 +234,8 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './HomeSection3.scss';
 import { Autocomplete, useLoadScript } from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import the styling for toast
 
 const libraries = ['places'];
 
@@ -250,7 +252,7 @@ const CartDetails = () => {
     const navigate = useNavigate();
 
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyAHWgq2_Us0Dq7UcVoP4FRGYcDqDh6XH_M',
+        googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY', // Replace with your API Key
         libraries,
     });
 
@@ -282,52 +284,13 @@ const CartDetails = () => {
         setNumOfDays(days);
     }, [startDate, endDate]);
 
-    // const handleFindCartClick = async () => {
-    //     // Create the payload to send to the API
-    //     const data = {
-    //         pickup: pickupLocation,
-    //         drop: deliveryLocation,
-    //         pickdate: startDate,
-    //         dropdate: endDate,
-    //         days: numOfDays.toString(), // Ensure that days are sent as a string
-    //     };
-
-    //     try {
-    //         // POST request to the API
-    //         const response = await fetch('http://44.196.192.232:5001/api/reserve/reservation', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(data),
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Failed to submit reservation');
-    //         }
-
-    //         const result = await response.json();
-
-    //         // Extract reservation ID from the result and store it in localStorage
-    //         const { reserveId } = result;
-    //         if (reserveId) {
-    //             localStorage.setItem('reservationId', reserveId);
-    //             console.log('Reservation ID stored in localStorage:', reserveId);
-    //         }
-    //         else{
-    //             console.log('reserveid  not found');
-                
-    //         }
-
-    //         console.log('Reservation successful:', result);
-
-    //         // Redirect to another page after successful reservation
-    //         navigate('/cart'); // Adjust the path if needed
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //     }
-    // };
     const handleFindCartClick = async () => {
+        // Check if any of the required fields are empty
+        if (!pickupLocation || !deliveryLocation || !startDate || !endDate) {
+            toast.error('Please fill all the fields!'); // Show error toast
+            return; // Prevent further execution
+        }
+
         // Create the payload to send to the API
         const data = {
             pickup: pickupLocation,
@@ -336,7 +299,7 @@ const CartDetails = () => {
             dropdate: endDate,
             days: numOfDays.toString(),
         };
-    
+
         try {
             // POST request to the API
             const response = await fetch('http://44.196.192.232:5001/api/reserve/reservation', {
@@ -346,37 +309,37 @@ const CartDetails = () => {
                 },
                 body: JSON.stringify(data),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Failed to submit reservation');
             }
-    
+
             const result = await response.json();
-            console.log('API response:', result); // Log the full response
-    
+            console.log('API response:', result);
+
             // Extract reservation ID from the result and store it in localStorage
             const { id } = result;
             if (id) {
                 localStorage.setItem('reservationId', id);
-                
             } else {
                 console.log('reserveId not found in the response');
             }
-    
+
             console.log('Reservation successful:', result);
-    
+
             // Redirect to another page after successful reservation
             navigate('/cart');
         } catch (error) {
             console.error('Error:', error);
         }
     };
-    
+
     if (loadError) return <div>Error loading maps: {loadError.message}</div>;
     if (!isLoaded) return <div>Loading Maps...</div>;
 
     return (
         <>
+            <ToastContainer /> {/* Add Toaster Container */}
             <div className='kk'>
                 <div className="home3-header">
                     <u><h1>CART DETAILS</h1></u>

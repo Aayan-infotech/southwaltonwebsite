@@ -341,7 +341,7 @@
 
     const getSize = async () => {
       try {
-        const vehicleId = localStorage.getItem('vehicle_Id');
+        const vehicleId = localStorage.getItem('vehicleId');
         if (!vehicleId) {
           console.error('Vehicle ID not found in local storage');
           return;

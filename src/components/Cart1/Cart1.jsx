@@ -10,7 +10,7 @@ const Cart1 = () => {
     </div>
 
     <div className="heading">
-      <h2>Our Best <span>Golf Cart</span></h2>
+      <h2>Our Best Golf Cart</h2>
 
     </div>
     </>
