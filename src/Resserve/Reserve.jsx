@@ -60,7 +60,7 @@ const Reserve = () => {
     // Fetch vehicle details from API
     useEffect(() => {
         if (vehicleId) {
-            fetch(`http://localhost:5001/api/vehicle/vehicles/${vehicleId}`)
+            fetch(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`)
                 .then(response => response.json())
                 .then(data => {
                     setVehicleDetails(data);
@@ -74,7 +74,7 @@ const Reserve = () => {
     // Fetch reservation dates from API
     useEffect(() => {
         if (reservationId) {
-            fetch(`http://localhost:5001/api/reserve/reservation/${reservationId}`)
+            fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
                 .then(response => response.json())
                 .then(data => {
                     setReservationDates(data);

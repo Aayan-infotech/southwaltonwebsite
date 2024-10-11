@@ -61,7 +61,7 @@ const Agreement = () => {
 
     // Attempt to save the signature data to the server
     try {
-      await axios.post('http://localhost:5001/api/sign/save', { 
+      await axios.post('http://44.196.192.232:5001/api/sign/save', { 
         userId,
         signatureData: signature 
       });
