@@ -252,7 +252,7 @@ const CartDetails = () => {
     const navigate = useNavigate();
 
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY', // Replace with your API Key
+        googleMapsApiKey: 'AIzaSyAHWgq2_Us0Dq7UcVoP4FRGYcDqDh6XH_M', // Replace with your API Key
         libraries,
     });
 
