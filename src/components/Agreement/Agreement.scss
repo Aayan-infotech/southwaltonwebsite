@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 $font-family: 'Raleway', sans-serif;
 
-
-h1 {
+.agreement-container
+{
+  margin: 1REM;
+  h1 {
   font-size: 4em;
 }
 
@@ -119,4 +121,4 @@ h1 {
       }
     }
   }
-}
+}}
