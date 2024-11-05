@@ -290,7 +290,10 @@ const CartDetails = () => {
             toast.error('Please fill all the fields!'); // Show error toast
             return; // Prevent further execution
         }
-
+    
+        // Retrieve user ID from local storage
+        const userId = localStorage.getItem('user'); // Adjust the key as per your setup
+    
         // Create the payload to send to the API
         const data = {
             pickup: pickupLocation,
@@ -298,8 +301,9 @@ const CartDetails = () => {
             pickdate: startDate,
             dropdate: endDate,
             days: numOfDays.toString(),
+            userId: userId, // Include user ID in the payload
         };
-
+    
         try {
             // POST request to the API
             const response = await fetch('http://44.196.192.232:5001/api/reserve/reservation', {
@@ -309,14 +313,14 @@ const CartDetails = () => {
                 },
                 body: JSON.stringify(data),
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to submit reservation');
             }
-
+    
             const result = await response.json();
             console.log('API response:', result);
-
+    
             // Extract reservation ID from the result and store it in localStorage
             const { id } = result;
             if (id) {
@@ -324,15 +328,16 @@ const CartDetails = () => {
             } else {
                 console.log('reserveId not found in the response');
             }
-
+    
             console.log('Reservation successful:', result);
-
+    
             // Redirect to another page after successful reservation
             navigate('/cart');
         } catch (error) {
             console.error('Error:', error);
         }
     };
+    
 
     if (loadError) return <div>Error loading maps: {loadError.message}</div>;
     if (!isLoaded) return <div>Loading Maps...</div>;
