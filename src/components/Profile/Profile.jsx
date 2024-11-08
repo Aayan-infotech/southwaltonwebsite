@@ -989,8 +989,8 @@ const ProfileUpdate = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const userStr = localStorage.getItem('user');
-      const user = JSON.parse(userStr);
+      const user = localStorage.getItem('user');
+      // const user = JSON.parse(userStr);
       setUser(user);
 
       if (user) {
@@ -1123,7 +1123,7 @@ const ProfileUpdate = () => {
       <div className="profile1">
         <div className="image-section" onClick={handleClickImage}>
           <img src={imagePreview} alt="Profile Preview" />
-          <input type="file" accept="image/*" ref={inputRef} onChange={handleImageChange} style={{ display: 'none' }} />
+          <input type="file" ref={inputRef} onChange={handleImageChange} style={{ display: 'none' }} />
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
         </div>
         <div className="field-section">
@@ -1217,3 +1217,4 @@ const ProfileUpdate = () => {
 };
 
 export default ProfileUpdate;
+  

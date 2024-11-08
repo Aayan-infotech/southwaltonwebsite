@@ -1270,7 +1270,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Payment.scss';
 
-const stripePromise = loadStripe('pk_test_51PsifGP6k3IQ77YBcNp5UT4dfveEftKvOvirubtf9xPBEfp2Uu3K5L5bOO9OjoJCQhaAzNqWIsY7fWmkKOHlvKaZ00A04yTHB6');
+const stripePromise = loadStripe('pk_test_51PsifGP6k3IQ77YBgYy0dyPsIGz96iJFxWPDYwRNuEVxynkuKT6XfKeL73g5rqn6cf7LVApW2GUat2Zfjk7HCKwZ005FCFTkvr');
 
 const CheckoutForm = () => {
     const stripe = useStripe();
@@ -1284,6 +1284,7 @@ const CheckoutForm = () => {
     const [error, setError] = useState('');
     const [transactionId, setTransactionId] = useState('');
     const [reservationId, setReservationId] = useState('');
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -1299,12 +1300,18 @@ const CheckoutForm = () => {
                 }
 
                 // Fetch vehicle details
-                const vehicleId = localStorage.getItem('vehicleId');
-                if (vehicleId) {
-                    const vehicleResponse = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
-                    setAmount(vehicleResponse.data.vprice);
+                // const vehicleId = localStorage.getItem('vehicleId');
+                // if (vehicleId) {
+                //     const vehicleResponse = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
+                //     setAmount(vehicleResponse.data.vprice);
+                // } else {
+                //     throw new Error('Vehicle ID not found');
+                // }
+                const storedAmount = localStorage.getItem('price');
+                if (storedAmount) {
+                    setAmount(storedAmount); // Set the amount from localStorage
                 } else {
-                    throw new Error('Vehicle ID not found');
+                    throw new Error('Price not found in localStorage');
                 }
 
                 // Fetch reservation ID
@@ -1400,6 +1407,7 @@ const CheckoutForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email"
+                        readOnly
                         required
                     />
                 </div>
