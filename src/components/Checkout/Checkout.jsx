@@ -275,7 +275,7 @@ const BookingForm = () => {
         bsize: data.vseats
       }));
     } catch (error) {
-      console.log("Error fetching vehicle details", error);
+      console.log("Error fetching vehicle details", error);  
     }
   };
 
