@@ -1270,7 +1270,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Payment.scss';
 
-const stripePromise = loadStripe('pk_test_51PsifGP6k3IQ77YB1i6Y93HsiYaIRNZPzVMSeHZftRZbcoxHj5xJQwJQsxePle4vpFySYjuClVX0ZBpsnMYoRt6l00bkoucpjf   ');
+const stripePromise = loadStripe('pk_test_51PsifGP6k3IQ77YBgYy0dyPsIGz96iJFxWPDYwRNuEVxynkuKT6XfKeL73g5rqn6cf7LVApW2GUat2Zfjk7HCKwZ005FCFTkvr');
 
 const CheckoutForm = () => {
     const stripe = useStripe();

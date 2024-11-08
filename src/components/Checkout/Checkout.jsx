@@ -267,7 +267,7 @@ const BookingForm = () => {
         return;
       }
 
-      const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
+      const response = await axios.get(`http://44.196.192.232:8132/api/vehicle/vehicles/${vehicleId}`);
       const data = response.data;
       setFormData(prevData => ({
         ...prevData,
