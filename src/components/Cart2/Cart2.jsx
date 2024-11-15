@@ -393,12 +393,38 @@ import Group3 from './img/Group3.png';
 import Popup from '../Popup/Popup';
 import { useNavigate } from 'react-router-dom';
 
-const fetchVehicledata = async (setCardDetails, setError) => {
+const determineSeason = (month) => {
+    if (month >= 0 && month <= 2) return 'peakseason'; // Jan - March
+    if (month >= 3 && month <= 8) return 'offseason';  // April - Sept
+    return 'secondaryseason';                           // Oct - Dec
+};
+
+const calculateDayDifference = (pickupDate, dropoffDate) => {
+    const dayDifference = Math.ceil((dropoffDate - pickupDate) / (1000 * 60 * 60 * 24));
+    const dayWords = {
+        1: 'oneDay',
+        2: 'twoDay',
+        3: 'threeDay',
+        4: 'fourDay',
+        5: 'fiveDay',
+        6: 'sixDay',
+        7: 'sevenDay',
+    };
+    return dayDifference <= 7 ? dayWords[dayDifference] || 'seven' : 'sevenDay';
+};
+
+const fetchVehicledata = async (season, day, setCardDetails, setError) => {
     try {
-        const response = await axios.get('http://44.196.192.232:8132/api/vehicle/');
-        setCardDetails(response.data);
+        const response = await axios.get('http://44.196.192.232:8132/api/vehicle/by-season-and-day', {
+            params: { season, day },
+        });
+        if (response.data?.length > 0) {
+            setCardDetails(response.data); 
+        } else {
+            setError('No vehicles available for the selected date and season.');
+        }
     } catch (error) {
-        setError('Error fetching details');
+        setError('Error fetching vehicle details');
         console.log('Error fetching details:', error);
     }
 };
@@ -413,12 +439,11 @@ const changecartstatus = async (id, status) => {
 
 const Card = ({ image, passengers, model, price, id, status, onChoose }) => {
     const imageUrl = image ? `${image}` : Group3;
-
     return (
         <div className="card-cart2">
             <img src={imageUrl || Group3} alt={`${model} image`} className="card-image" />
             <div className="card-content">
-                <p className="passengers">{passengers} Passenger</p>
+                <p className="passengers">{passengers}  </p>
                 <div className="manage">
                     <h2 className="model">{model}</h2>
                     <p className="price">Price <span>$ {price}</span></p>
@@ -438,18 +463,21 @@ const CardList = ({ cardDetails, onChoose }) => {
     return (
         <div className="card-list">
             {cardDetails.length > 0 ? (
-                cardDetails.map((card, index) => (
-                    <Card
-                        key={index}
-                        image={card.image}
-                        passengers={card.vseats}
-                        model={card.vname}
-                        price={card.vprice}
-                        id={card._id}
-                        status={card.Addtocart}
-                        onChoose={onChoose}
-                    />
-                ))
+                cardDetails.map((card, index) => {
+                    const { image, passenger, vname, price, _id, Addtocart } = card;
+                    return (
+                        <Card
+                            key={index}
+                            image={image}
+                            passengers={passenger}
+                            model={vname}
+                            price={price}
+                            id={_id}
+                            status={Addtocart}
+                            onChoose={onChoose}
+                        />
+                    );
+                })
             ) : (
                 <p>No vehicles available</p>
             )}
@@ -463,23 +491,54 @@ const Cart2 = () => {
     const [showAll, setShowAll] = useState(false);
     const [isPopupVisible, setPopupVisible] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+    const [reservationDate, setReservationDate] = useState(null);
+    const [season, setSeason] = useState('');  // New state for season
+    const [day, setDay] = useState('');        // New state for day
     const navigate = useNavigate();
-  
+
     useEffect(() => {
-        fetchVehicledata(setCardDetails, setError);
+        const reservationId = localStorage.getItem('reservationId');
+        if (reservationId) {
+            axios.get(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
+                .then(response => {
+                    const reservationData = response.data;
+                    if (reservationData && reservationData.pickdate && reservationData.dropdate) {
+                        const pickupDate = new Date(reservationData.pickdate);
+                        const dropoffDate = new Date(reservationData.dropdate);
+                        setReservationDate({ pickupDate, dropoffDate });
+                    } else {
+                        setError('Reservation data is missing pickdate or dropdate.');
+                    }
+                })
+                .catch(err => {
+                    setError('Error fetching reservation data');
+                    console.log('Error fetching reservation data:', err);
+                });
+        } else {
+            setError('No reservation ID found');
+        }
     }, []);
 
-    const initialCardCount = 5; // Number of cards to display initially
+    useEffect(() => {
+        if (reservationDate) {
+            const { pickupDate, dropoffDate } = reservationDate;
+            const currentSeason = determineSeason(pickupDate.getMonth());
+            const currentDay = calculateDayDifference(pickupDate, dropoffDate);
+            setSeason(currentSeason);  // Set season in state
+            setDay(currentDay);        // Set day in state
+            fetchVehicledata(currentSeason, currentDay, setCardDetails, setError);
+        }
+    }, [reservationDate]);
 
+    const initialCardCount = 5;
     const handleToggle = () => {
         setShowAll(!showAll);
     };
 
     const handleChoose = (id, status) => {
-        // Save the selected vehicle ID to local storage
         localStorage.setItem('vehicleId', id);
-        console.log('Vehicle ID stored in localStorage:', id); // Log the vehicle ID to the console
-
+        console.log('vehicleId',id);
+        
         changecartstatus(id, status);
         setSelectedCard(id);
         setPopupVisible(true);
@@ -491,14 +550,10 @@ const Cart2 = () => {
 
     const handleBookClick = () => {
         const reserveId = localStorage.getItem('reservationId');
-
         if (reserveId) {
-            // If reserveId exists, navigate to the reserve page
-            console.log('Reserve ID found:', reserveId); // Log the reserve ID to the console
             setPopupVisible(false);
-            navigate('/reserve'); // Replace with your actual booking page route
+            navigate('/reserve', { state: { season, day } });  // Use season and day from state
         } else {
-            console.log('Reserve ID not found, navigating to cart'); // Log if reserveId doesn't exist
             navigate('/home3');
         }
     };
@@ -518,4 +573,3 @@ const Cart2 = () => {
 };
 
 export default Cart2;
-   

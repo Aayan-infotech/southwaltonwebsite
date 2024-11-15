@@ -224,7 +224,7 @@
   // export default BookingForm;
 import React, { useState, useEffect } from 'react';
 import './Checkout.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const BookingForm = () => {
@@ -251,6 +251,8 @@ const BookingForm = () => {
   const [successMessage, setSuccessMessage] = useState('');
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { season, day } = location.state || {};
    useEffect(() => {
     const id = localStorage.getItem('reservationId');
     if (id) {
@@ -267,17 +269,30 @@ const BookingForm = () => {
         return;
       }
 
-      const response = await axios.get(`http://44.196.192.232:8132/api/vehicle/vehicles/${vehicleId}`);
+      // Validate season and day before making the request
+      if (!season || !day) {
+        console.error('Season or day not specified in state');
+        return;
+      }
+
+      // Include season and day in the API request
+      const response = await axios.get(
+        `http://44.196.192.232:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`
+      );
       const data = response.data;
+
       setFormData(prevData => ({
         ...prevData,
         vehiclesId: vehicleId,
         bsize: data.vseats
       }));
     } catch (error) {
-      console.log("Error fetching vehicle details", error);  
+      console.log('Error fetching vehicle details', error);
     }
   };
+
+ 
+
 
   useEffect(() => {
     getSize();

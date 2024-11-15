@@ -89,103 +89,135 @@
 // }
 
 // export default Reserve;
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import homebg1 from './img/homebg1.png';
-import Group from './img/Group.png';
-import './Reserve.scss';
+    import React, { useEffect, useRef, useState } from 'react';
+    import { useNavigate, useLocation } from 'react-router-dom';
+    import homebg1 from './img/homebg1.png';
+    import Group from './img/Group.png';
+    import './Reserve.scss';
 
-const Reserve = () => {
-    const [vehicleDetails, setVehicleDetails] = useState(null);
-    const [reservationDates, setReservationDates] = useState(null);
-    const vehicleId = localStorage.getItem('vehicleId'); // assuming vehicleId is stored in localStorage
-    const reservationId = localStorage.getItem('reservationId'); // assuming reservationId is stored in localStorage
+    const Reserve = () => {
+        const [vehicleDetails, setVehicleDetails] = useState(null);
+        const [reservationDates, setReservationDates] = useState(null);
+        const vehicleId = localStorage.getItem('vehicleId');
+        const reservationId = localStorage.getItem('reservationId');
+        const canvasRef = useRef(null);
 
-    const navigate = useNavigate();
+        const navigate = useNavigate();
+        const location = useLocation();
+        const { season, day } = location.state || {};
 
-    // Helper function to format dates
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-    };
+        // Helper function to format dates
+        const formatDate = (dateString) => {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        };
 
-    // Fetch vehicle details from API
-    useEffect(() => {
-        if (vehicleId) {
-            fetch(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`)
-                .then(response => response.json())
-                .then(data => {
-                    setVehicleDetails(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching vehicle details:', error);
-                });
-        }
-    }, [vehicleId]);
+        // Fetch vehicle details from API
+        useEffect(() => {
+            if (vehicleId && season && day) {
+                fetch(`http://44.196.192.232:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
+                    .then(response => response.json())
+                    .then(data => setVehicleDetails(data))
+                    .catch(error => console.error('Error fetching vehicle details:', error));
+            }
+        }, [vehicleId, season, day]);
 
-    // Fetch reservation dates from API
-    useEffect(() => {
-        if (reservationId) {
-            fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
-                .then(response => response.json())
-                .then(data => {
-                    setReservationDates(data);
-                })
-                .catch(error => {
-                    console.error('Error fetching reservation dates:', error);
-                });
-        }
-    }, [reservationId]);
-    useEffect(() => {
-        if (vehicleDetails && reservationDates) {
-            const calculatedPrice = vehicleDetails.vprice * reservationDates.days;
-            localStorage.setItem('price', calculatedPrice); // Store the calculated price in localStorage
-        }
-    }, [vehicleDetails, reservationDates]);
+        // Fetch reservation dates from API
+        useEffect(() => {
+            if (reservationId) {
+                fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
+                    .then(response => response.json())
+                    .then(data => setReservationDates(data))
+                    .catch(error => console.error('Error fetching reservation dates:', error));
+            }
+        }, [reservationId]);
 
-    const handleCheckoutClick = () => {
-        navigate('/checkout'); // Navigate to the checkout page
-    };
+        useEffect(() => {
+            if (vehicleDetails && reservationDates) {
+                const calculatedPrice = vehicleDetails.price * reservationDates.days;
+                localStorage.setItem('price', calculatedPrice);
+            }
+        }, [vehicleDetails, reservationDates]);
 
-    // Calculate the price only if both vehicleDetails and reservationDates are available
-    const price = localStorage.getItem('price') || '800';
+        // Draw image on canvas
+        useEffect(() => {
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+            const image = new Image();
+            
+            // Set canvas dimensions
+            const canvasWidth = 300;
+            const canvasHeight = 200;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
 
-    return (
-        <div className='Reserve'>
-            <img className='aa' src={homebg1} alt="" />
-            <div className='week'>
-                <div className='weekName'>
-                    <img src={vehicleDetails?.vimage || Group} alt="" />
+            // Use vehicle image or default image
+            image.src = vehicleDetails?.image || Group;
+            image.onload = () => {
+                // Calculate dimensions to fit the image within the canvas
+                const aspectRatio = image.width / image.height;
+                let renderWidth, renderHeight, offsetX, offsetY;
+
+                if (aspectRatio > canvasWidth / canvasHeight) {
+                    renderWidth = canvasWidth;
+                    renderHeight = renderWidth / aspectRatio;
+                    offsetX = 0;
+                    offsetY = (canvasHeight - renderHeight) / 2;
+                } else {
+                    renderHeight = canvasHeight;
+                    renderWidth = renderHeight * aspectRatio;
+                    offsetX = (canvasWidth - renderWidth) / 2;
+                    offsetY = 0;
+                }
+
+                // Clear canvas and draw the image
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                ctx.drawImage(image, offsetX, offsetY, renderWidth, renderHeight);
+            };
+        }, [vehicleDetails]);
+
+        const handleCheckoutClick = () => {
+            navigate('/checkout' , {state : {season , day}});
+        };
+
+        const price = localStorage.getItem('price') || '800';
+
+        return (
+            <div className='Reserve'>
+                <img className='aa' src={homebg1} alt="" />
+                <div className='week'>
+                    <div className='weekName'>
+                        <canvas ref={canvasRef}></canvas>
+                    </div>
+                    <div className='week2'>
+                        <h3>
+                            {vehicleDetails?.vname || 'Vehicle Name'}
+                            &nbsp;<span>{`${vehicleDetails?.passenger || '4'} `}</span>
+                        </h3>
+                        <h4>
+                            Price: <span>${price}</span>
+                        </h4>
+                        
+                        <p>
+                            Start Date: <span>{reservationDates?.pickdate ? formatDate(reservationDates.pickdate) : '2 October 2024'}</span>
+                        </p>
+                        
+                        <p>
+                            End Date: <span>{reservationDates?.dropdate ? formatDate(reservationDates.dropdate) : '5 October 2024'}</span>
+                        </p>
+                    </div>
                 </div>
-                <div className='week2'>
-                    <h3>
-                        {vehicleDetails?.vname || 'Vehicle Name'} 
-                        &nbsp;<span>{`${vehicleDetails?.vseats || '4'} Passengers`}</span>
-                    </h3>
-                    <h4>
-                        Price: <span>${price}</span>
-                    </h4>
-                    
-                    <p>
-                        Start Date: <span>{reservationDates?.pickdate ? formatDate(reservationDates.pickdate) : '2 October 2024'}</span>
-                    </p>
-                    
-                    <p>
-                        End Date: <span>{reservationDates?.dropdate ? formatDate(reservationDates.dropdate) : '5 October 2024'}</span>
-                    </p>
+                <div className='book'>
+                    <button onClick={handleCheckoutClick}>
+                        Request Booking
+                    </button>
                 </div>
             </div>
-            <div className='book'>
-                <button onClick={handleCheckoutClick}>
-                    Request Booking
-                </button>
-            </div>
-        </div>
-    );
-}
+        );
+    };
 
-export default Reserve;
+    export default Reserve;
