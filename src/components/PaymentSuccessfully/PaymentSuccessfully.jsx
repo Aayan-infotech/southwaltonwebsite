@@ -82,4 +82,4 @@ const InvoiceDetails = () => {
     );
   };
 
-export default InvoiceDetails;
+export default InvoiceDetails;     
