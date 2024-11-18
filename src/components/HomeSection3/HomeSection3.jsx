@@ -306,7 +306,7 @@ const CartDetails = () => {
     
         try {
             // POST request to the API
-            const response = await fetch('http://44.196.192.232:5001/api/reserve/reservation', {
+            const response = await fetch('http://localhost:5001/api/reserve/reservation', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

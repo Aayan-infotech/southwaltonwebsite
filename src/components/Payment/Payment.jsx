@@ -1386,7 +1386,7 @@ const CheckoutForm = () => {
                 const bookingId = localStorage.getItem('bookFormId'); // Retrieve bookingId from localStorage
                 await sendPaymentDetails(transactionId, userId, bookingId, reservationId); // Pass reservationId
 
-                navigate('/payment-successfully', { state: { transactionId } });
+                navigate('/payment-successfully', { state: { transactionId , amount} });
             }
         } catch (error) {
             console.error('Error processing payment:', error);

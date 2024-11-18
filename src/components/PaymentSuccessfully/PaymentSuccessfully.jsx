@@ -11,7 +11,7 @@ const InvoiceDetails = () => {
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const { transactionId } = location.state || {}; // Extract transactionId from location state
+  const { transactionId,amount } = location.state || {}; // Extract transactionId from location state
 
 
   const fetchUserDetails = async () => {
@@ -37,11 +37,11 @@ const InvoiceDetails = () => {
   }
   const fetchVehicleDetails = async () => {
 
-    const vehicle = localStorage.getItem('vehicleId');
-    if (!vehicle) {
+    const vehicle = localStorage.getItem('vehicleId');  
+    if (!vehicle) {     
       setError('Vehicle not found')
       setLoading(false);
-      return;
+      return;               
     }
     try {
       const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicle}`)
@@ -72,7 +72,7 @@ const InvoiceDetails = () => {
         {/* <p><strong>Bank</strong> : HDFC</p> */}
         <p><strong>Mobile</strong> : {phone}</p>
         <p><strong>Email</strong> : {email}</p>
-        <p><strong>Amount Paid</strong> : ${price}</p>
+        <p><strong>Amount Paid</strong> : ${amount}</p>
         <p><strong>Transaction ID</strong> : {transactionId || 'N/A'}</p>
         {/* <Link to='/agreement'>
           <button className="invoice-button"><i className="fa-solid fa-file-invoice"></i> Invoice</button>
@@ -82,4 +82,4 @@ const InvoiceDetails = () => {
     );
   };
 
-export default InvoiceDetails;
+export default InvoiceDetails;     

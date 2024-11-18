@@ -144,7 +144,7 @@ const Agree = () => {
                 formData.append('userId', userId); // Append the user ID
 
                 // Make the API request
-                const response = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
+                const response = await axios.post('http://localhost:5001/api/sign/save', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
