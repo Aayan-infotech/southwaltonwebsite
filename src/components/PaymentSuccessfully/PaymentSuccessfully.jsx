@@ -41,7 +41,7 @@ const InvoiceDetails = () => {
     if (!vehicle) {     
       setError('Vehicle not found')
       setLoading(false);
-      return;            
+      return;               
     }
     try {
       const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicle}`)
