@@ -11,6 +11,7 @@ import Agree from './Agree';
 const Agreement = () => {
   // const sigCanvas = useRef(null);
   const [signature, setSignature] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [checkboxes, setCheckboxes] = useState({
     guidelineAgreement: false,
     feesAgreement: false,
@@ -145,63 +146,75 @@ const handleClear = () => {
 
   // mahi
   const handleSubmit = async (e) => {
+    if (isLoading) return;
     e.preventDefault();
 
-    if (!checkboxes.guidelineAgreement || !checkboxes.feesAgreement) {
-        Toastify({
-            text: "Please agree to all guidelines and fees!",
-            duration: 3000,
-            gravity: "top",
-            position: 'right',
-            backgroundColor: "red",
-        }).showToast();
-        return;
-    }
-
     if (uploadedFile && userId) {
-        try {
-            const formData = new FormData();
-            formData.append('image', uploadedFile); // Use the uploadedFile state
-            formData.append('userId', userId); // Append the user ID
-
-            // Make the API request
-            const response = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-
-            console.log('Image uploaded successfully:', response.data);
-            Toastify({
-                text: "Image uploaded successfully!",
-                duration: 3000,
-                gravity: "top",
-                position: 'right',
-                backgroundColor: "green",
-            }).showToast(); // Notify user on success
-
-            navigate('/payment');
-
-        } catch (error) {
-            console.error('Error uploading image:', error);
-            console.error('Response data:', error.response?.data); // Log the response data for more details
-            Toastify({
-                text: "Error uploading image. Please try again.",
-                duration: 3000,
-                gravity: "top",
-                position: 'right',
-                backgroundColor: "red",
-            }).showToast(); // Notify user on error
-        }
-    } else {
-        Toastify({
-            text: "Please upload an image and ensure user ID is available before submitting.",
-            duration: 3000,
-            gravity: "top",
-            position: 'right',
-            backgroundColor: "orange",
-        }).showToast(); // Notify user if conditions aren't met
+      try {
+        setIsLoading(true);
+          const formData = new FormData();
+          formData.append('image', uploadedFile); // Use the uploadedFile state
+          formData.append('userId', userId); // Append the user ID
+  
+          // Make the API request to upload the image
+          const uploadResponse = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+              },
+          });
+  
+          console.log('Image uploaded successfully:', uploadResponse.data);
+  
+          Toastify({
+              text: "Image uploaded successfully!",
+              duration: 3000,
+              gravity: "top",
+              position: 'right',
+              backgroundColor: "green",
+          }).showToast(); // Notify user on success
+  
+          // After successful image upload, generate the PDF
+          const pdfResponse = await axios.post('http://44.196.192.232:5001/generate-pdf', { userId });
+  
+          console.log('PDF generated successfully:', pdfResponse.data);
+  
+          // Notify the user of PDF generation success
+          Toastify({
+              text: "PDF generated successfully!",
+              duration: 3000,
+              gravity: "top",
+              position: 'right',
+              backgroundColor: "blue",
+          }).showToast();
+  
+          // Navigate to the payment page
+          navigate('/payment');
+  
+      } catch (error) {
+          console.error('Error:', error);
+          console.error('Response data:', error.response?.data); // Log response data for debugging
+  
+          Toastify({
+              text: error.response?.data?.message || "Error occurred. Please try again.",
+              duration: 3000,
+              gravity: "top",
+              position: 'right',
+              backgroundColor: "red",
+          }).showToast(); // Notify user on error
+      }
+      finally {
+        setIsLoading(false); // Hide the loader and re-enable the button
     }
+  } else {
+      Toastify({
+          text: "Please upload an image and ensure user ID is available before submitting.",
+          duration: 3000,
+          gravity: "top",
+          position: 'right',
+          backgroundColor: "orange",
+      }).showToast(); // Notify user if conditions aren't met
+  }
+  
 };
 
   return (
@@ -616,8 +629,24 @@ const handleClear = () => {
                 </div>
 
                 <div className="button-group">
-                    <button type="button" className="btn-clear" onClick={handleClear}>Clear</button>
-                    <button type="submit" className="btn-submit">Submit</button>
+                {isLoading && (
+                <div className="loader-container">
+                    <div className="loader"></div>
+                </div>
+            )}
+                    <button type="button" className="btn-clear" onClick={handleClear}
+                    >Clear</button>
+                         <button
+                onClick={handleSubmit}
+                disabled={isLoading}
+                className={`submit-button ${isLoading ? 'loading' : ''}`}
+            >
+                {isLoading ? (
+                    <div className="loader"></div>
+                ) : (
+                    'Submit'
+                )}
+            </button>
                 </div>
             </form>
         </div>
