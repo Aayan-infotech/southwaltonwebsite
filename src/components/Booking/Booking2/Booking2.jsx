@@ -11,7 +11,7 @@
 
 //   const fetchModels = async () => {
 //     try {
-//       const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/`);
+//       const response = await axios.get(`http://localhost:5001/api/vehicle/`);
 //       console.log('response', response.data)
 //       setModels(response.data);
 //       console.log('model', models)
@@ -27,7 +27,7 @@
 //   const removecart = async (id, status) => {
 //     try {
 //       console.log(id, status);
-//       await axios.put(`http://44.196.192.232:5001/api/vehicle/removecart/${id}`, { status });
+//       await axios.put(`http://localhost:5001/api/vehicle/removecart/${id}`, { status });
 //       fetchModels();
 //     } catch (error) {
 //       console.log('Error changing Status', error);
@@ -53,7 +53,7 @@
 //           return (
 //             <div key={model.id} className="cart-model">
 //               <div className="cart-card">
-//                 <img src={`http://44.196.192.232:5001/uploads/${model.image}`} alt={model.vname} className="cart-image" />
+//                 <img src={`http://localhost:5001/uploads/${model.image}`} alt={model.vname} className="cart-image" />
 //                 <div className="cart-details">
 //                   <div className="cart-passengers">{model.vseats} Passengers</div>
 //                   <div className="cart-name">{model.vname}</div>
@@ -85,7 +85,7 @@ const CombinedComponent = () => {
 
   const fetchModels = async () => {
     try {
-      const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/`);
+      const response = await axios.get(`http://localhost:5001/api/vehicle/`);
       console.log('response', response.data);
       setModels(response.data);
     } catch (error) {
@@ -100,7 +100,7 @@ const CombinedComponent = () => {
   const removecart = async (id, status) => {
     try {
       console.log(id, status);
-      await axios.put(`http://44.196.192.232:5001/api/vehicle/removecart/${id}`, { status });
+      await axios.put(`http://localhost:5001/api/vehicle/removecart/${id}`, { status });
       fetchModels();
     } catch (error) {
       console.log('Error changing Status', error);

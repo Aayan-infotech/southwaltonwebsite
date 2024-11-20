@@ -24,7 +24,7 @@ const InvoiceDetails = () => {
     console.log(userId);
     try {
 
-      const response = await axios.get(`http://44.196.192.232:5001/api/user/${userId}`);
+      const response = await axios.get(`http://localhost:5001/api/user/${userId}`);
       console.log('response', response);
       setEmail(response.data.data.email);
       setName(response.data.data.name);
@@ -44,7 +44,7 @@ const InvoiceDetails = () => {
       return;               
     }
     try {
-      const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicle}`)
+      const response = await axios.get(`http://localhost:5001/api/vehicle/vehicles/${vehicle}`)
       setPrice(response.data.vprice);
       console.log(response);
       

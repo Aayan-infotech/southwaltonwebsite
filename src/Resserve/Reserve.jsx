@@ -25,7 +25,7 @@
 //     // Fetch vehicle details from API
 //     useEffect(() => {
 //         if (vehicleId) {
-//             fetch(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`)
+//             fetch(`http://localhost:5001/api/vehicle/vehicles/${vehicleId}`)
 //                 .then(response => response.json())
 //                 .then(data => {
 //                     setVehicleDetails(data);
@@ -39,7 +39,7 @@
 //     // Fetch reservation dates from API
 //     useEffect(() => {
 //         if (reservationId) {
-//             fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
+//             fetch(`http://localhost:5001/api/reserve/reservation/${reservationId}`)
 //                 .then(response => response.json())
 //                 .then(data => {
 //                     setReservationDates(data);
@@ -129,7 +129,7 @@
         // Fetch reservation dates from API
         useEffect(() => {
             if (reservationId) {
-                fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
+                fetch(`http://localhost:5001/api/reserve/reservation/${reservationId}`)
                     .then(response => response.json())
                     .then(data => setReservationDates(data))
                     .catch(error => console.error('Error fetching reservation dates:', error));
@@ -181,13 +181,15 @@
         }, [vehicleDetails]);
 
         const handleCheckoutClick = async () => {
+            console.log('button clicked');
+            
             if (!vehicleId || !reservationId) {
                 alert("Vehicle ID or Reservation ID is missing.");
                 return;
             }
         
             try {
-                const response = await fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`, {
+                const response = await fetch(`http://localhost:5001/api/reserve/reservation/${reservationId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -205,7 +207,7 @@
                 }
             } catch (error) {
                 console.error('Error in handleCheckoutClick:', error);
-                alert('An unexpected error occurred. Please try again.');
+                alert(`An unexpected error occurred: ${error.message}`);
             }
         };
         

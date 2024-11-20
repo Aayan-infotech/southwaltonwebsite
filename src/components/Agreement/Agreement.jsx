@@ -100,7 +100,7 @@ const handleClear = () => {
   //               formData.append('userId', userId); // Append the user ID
 
   //               // Make the API request
-  //               const response = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
+  //               const response = await axios.post('http://localhost:5001/api/sign/save', formData, {
   //                   headers: {
   //                       'Content-Type': 'multipart/form-data',
   //                   },
@@ -132,7 +132,7 @@ const handleClear = () => {
 
   //   // Attempt to save the signature data to the server
   //   // try {
-  //   //   await axios.post('http://44.196.192.232:5001/api/sign/save', { 
+  //   //   await axios.post('http://localhost:5001/api/sign/save', { 
   //   //     userId,
   //   //     signatureData: signature 
   //   //   });
@@ -157,7 +157,7 @@ const handleClear = () => {
           formData.append('userId', userId); // Append the user ID
   
           // Make the API request to upload the image
-          const uploadResponse = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
+          const uploadResponse = await axios.post('http://localhost:5001/api/sign/save', formData, {
               headers: {
                   'Content-Type': 'multipart/form-data',
               },
@@ -174,7 +174,7 @@ const handleClear = () => {
           }).showToast(); // Notify user on success
   
           // After successful image upload, generate the PDF
-          const pdfResponse = await axios.post('http://44.196.192.232:5001/generate-pdf', { userId });
+          const pdfResponse = await axios.post('http://localhost:5001/generate-pdf', { userId });
   
           console.log('PDF generated successfully:', pdfResponse.data);
   

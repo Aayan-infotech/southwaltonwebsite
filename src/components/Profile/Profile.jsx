@@ -22,7 +22,7 @@
 
   //       if (user) {
   //         try {
-  //           const response = await axios.get(`http://44.196.192.232:5001/api/user/${user}`);
+  //           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
   //           setUserData(response.data.data); // Set user data in state
   //           console.log("response", response.data.data);
   //         } catch (error) {
@@ -45,7 +45,7 @@
   //   const handleSubmit = async (e) => {
   //     e.preventDefault();
   //     try { 
-  //       const response = await axios.put(`http://44.196.192.232:5001/api/user/${user}`, userData);
+  //       const response = await axios.put(`http://localhost:5001/api/user/${user}`, userData);
   //       console.log('User data updated:', response.data);
   //     } catch (error) {
   //       console.error('Error updating user data:', error);
@@ -171,7 +171,7 @@
     
     //       if (user) {
     //         try {
-    //           const response = await axios.get(`http://44.196.192.232:5001/api/user/${user}`);
+    //           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
     //           setUserData(response.data.data); // Set user data in state
     //           console.log("response", response.data.data);
     //         } catch (error) {
@@ -215,7 +215,7 @@
     //     }
     
     //     try {
-    //       const response = await axios.put(`http://44.196.192.232:5001/api/user/${user}`, formData, {
+    //       const response = await axios.put(`http://localhost:5001/api/user/${user}`, formData, {
     //         headers: {
     //           'Content-Type': 'multipart/form-data', // Important for file uploads
     //         },
@@ -352,7 +352,7 @@
 
 //       if (user) {
 //         try {
-//           const response = await axios.get(`http://44.196.192.232:5001/api/user/${user}`);
+//           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
 //           setUserData(response.data.data); // Set user data in state
 //           console.log("response", response.data.data);
 //         } catch (error) {
@@ -423,7 +423,7 @@
 //     // }
 
 //     try {
-//       const response = await axios.put(`http://44.196.192.232:5001/api/user/${user}`, formData, {
+//       const response = await axios.put(`http://localhost:5001/api/user/${user}`, formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data', // Important for file uploads
 //         },
@@ -563,7 +563,7 @@
 
 //       if (user) {
 //         try {
-//           const response = await axios.get(`http://44.196.192.232:5001/api/user/${user}`);
+//           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
 //           setUserData(response.data.data);
 //         } catch (error) {
 //           console.error('Error fetching user data:', error);
@@ -631,7 +631,7 @@
 //     }
 
 //     try {
-//       const response = await axios.put(`http://44.196.192.232:5001/api/user/${user}`, formData, {
+//       const response = await axios.put(`http://localhost:5001/api/user/${user}`, formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data',
 //         },
@@ -775,7 +775,7 @@
 
 //       if (user) {
 //         try {
-//           const response = await axios.get(`http://44.196.192.232:5001/api/user/${user}`);
+//           const response = await axios.get(`http://localhost:5001/api/user/${user}`);
 //           const data = response.data.data;
 
 //           setUserData(data);
@@ -849,7 +849,7 @@
 //     }
 
 //     try {
-//       const response = await axios.put(`http://44.196.192.232:5001/api/user/${user}`, formData, {
+//       const response = await axios.put(`http://localhost:5001/api/user/${user}`, formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data',
 //         },
@@ -995,7 +995,7 @@ const ProfileUpdate = () => {
 
       if (user) {
         try {
-          const response = await axios.get(`http://44.196.192.232:5001/api/user/${user}`);
+          const response = await axios.get(`http://localhost:5001/api/user/${user}`);
           const data = response.data.data;
 
           setUserData(data);
@@ -1069,7 +1069,7 @@ const ProfileUpdate = () => {
     }
 
     try {
-      const response = await axios.put(`http://44.196.192.232:5001/api/user/${user}`, formData, {
+      const response = await axios.put(`http://localhost:5001/api/user/${user}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -1087,7 +1087,7 @@ const ProfileUpdate = () => {
 
     try {
       // Fetch the current password from the API
-      const response = await axios.get(`http://44.196.192.232:5001/api/user/${user}`);
+      const response = await axios.get(`http://localhost:5001/api/user/${user}`);
       const storedPassword = response.data.data.password;
       console.log(storedPassword);
       
@@ -1103,7 +1103,7 @@ const ProfileUpdate = () => {
       }
 
       // Update the password in the backend
-      await axios.put(`http://44.196.192.232:5001/api/user/user/${user}/`, { newPassword: newPassword });
+      await axios.put(`http://localhost:5001/api/user/user/${user}/`, { newPassword: newPassword });
 
       console.log('Password updated successfully');
       alert('Password updated successfully!');
