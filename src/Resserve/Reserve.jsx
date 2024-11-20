@@ -116,7 +116,7 @@
             });
         };
 
-        // Fetch vehicle details from API
+
         useEffect(() => {
             if (vehicleId && season && day) {
                 fetch(`http://44.196.192.232:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
@@ -126,7 +126,6 @@
             }
         }, [vehicleId, season, day]);
 
-        // Fetch reservation dates from API
         useEffect(() => {
             if (reservationId) {
                 fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
@@ -143,22 +142,21 @@
             }
         }, [vehicleDetails, reservationDates]);
 
-        // Draw image on canvas
+       
         useEffect(() => {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext('2d');
             const image = new Image();
-            
-            // Set canvas dimensions
+          
             const canvasWidth = 300;
             const canvasHeight = 200;
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
 
-            // Use vehicle image or default image
+        
             image.src = vehicleDetails?.image || Group;
             image.onload = () => {
-                // Calculate dimensions to fit the image within the canvas
+              
                 const aspectRatio = image.width / image.height;
                 let renderWidth, renderHeight, offsetX, offsetY;
 
