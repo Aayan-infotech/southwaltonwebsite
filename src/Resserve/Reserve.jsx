@@ -180,9 +180,36 @@
             };
         }, [vehicleDetails]);
 
-        const handleCheckoutClick = () => {
-            navigate('/checkout' , {state : {season , day}});
+        const handleCheckoutClick = async () => {
+            if (!vehicleId || !reservationId) {
+                alert("Vehicle ID or Reservation ID is missing.");
+                return;
+            }
+        
+            try {
+                const response = await fetch(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ vehicleId }),
+                });
+        
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Update successful:', result);
+                    navigate('/checkout', { state: { season, day } });
+                } else {
+                    console.error('Failed to update reservation:', response.statusText);
+                    alert('Failed to update the reservation. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error in handleCheckoutClick:', error);
+                alert('An unexpected error occurred. Please try again.');
+            }
         };
+        
+        
 
         const price = localStorage.getItem('price') || '800';
 
