@@ -550,9 +550,10 @@ const Cart2 = () => {
 
     const handleBookClick = () => {
         const reserveId = localStorage.getItem('reservationId');
+        const vehicleId = localStorage.getItem('vehicleId');
         if (reserveId) {
             setPopupVisible(false);
-            navigate('/reserve', { state: { season, day } });  // Use season and day from state
+            navigate('/reserve', { state: { season, day ,vehicleId } });  // Use season and day from state
         } else {
             navigate('/home3');
         }

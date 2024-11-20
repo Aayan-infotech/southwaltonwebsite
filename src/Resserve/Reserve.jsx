@@ -98,13 +98,13 @@
     const Reserve = () => {
         const [vehicleDetails, setVehicleDetails] = useState(null);
         const [reservationDates, setReservationDates] = useState(null);
-        const vehicleId = localStorage.getItem('vehicleId');
+        
         const reservationId = localStorage.getItem('reservationId');
         const canvasRef = useRef(null);
 
         const navigate = useNavigate();
         const location = useLocation();
-        const { season, day } = location.state || {};
+        const { season, day,vehicleId  } = location.state || {};
 
         // Helper function to format dates
         const formatDate = (dateString) => {
