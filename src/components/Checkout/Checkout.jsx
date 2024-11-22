@@ -222,265 +222,255 @@
   // };
 
   // export default BookingForm;
-import React, { useState, useEffect } from 'react';
-import './Checkout.scss';
-import { useNavigate,useLocation } from 'react-router-dom';
-import axios from 'axios';
-
-const BookingForm = () => {
-  const [formData, setFormData] = useState({
-    bname: '',
-    bphone: '',
-    vehiclesId: '',
-    bemail: '',
-    bsize: '',
-    baddress: '',
-    baddressh: '',
-    drivers: [{
-      dname: '',
-      dphone: '',
-      demail: '',
-      dlicense: null,
-      dpolicy: null,  
-      dexperience: ''
-    }]
-  });
-    const [reservationId, setReservationId] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { season, day } = location.state || {};
-   useEffect(() => {
-    const id = localStorage.getItem('reservationId');
-    if (id) {
-      setReservationId(id);  // Set the reservation ID into state
-    }
-  }, []);
-
-
-  const getSize = async () => {
-    try {
-      const vehicleId = localStorage.getItem('vehicleId');
-      if (!vehicleId) {
-        console.error('Vehicle ID not found in local storage');
-        return;
-      }
-
-      // Validate season and day before making the request
-      if (!season || !day) {
-        console.error('Season or day not specified in state');
-        return;
-      }
-
-      // Include season and day in the API request
-      const response = await axios.get(
-        `http://44.196.192.232:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`
-      );
-      const data = response.data;
-
-      setFormData(prevData => ({
-        ...prevData,
-        vehiclesId: vehicleId,
-        bsize: data.vseats
-      }));
-    } catch (error) {
-      console.log('Error fetching vehicle details', error);
-    }
-  };
-
- 
-
-
-  useEffect(() => {
-    getSize();
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleDriverChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedDrivers = [...formData.drivers];
-    updatedDrivers[index][name] = value;
-    setFormData({
-      ...formData,
-      drivers: updatedDrivers
-    });
-  };
-
-  const handleFileChange = (index, fileType, event) => {
-    const file = event.target.files[0];  
-    if (file) {
-      const newDrivers = [...formData.drivers];
-      newDrivers[index][fileType] = file;  
-      setFormData({ ...formData, drivers: newDrivers });
-    }
-  };
+  import React, { useState, useEffect } from 'react';
+  import './Checkout.scss';
+  import { useNavigate, useLocation } from 'react-router-dom';
+  import axios from 'axios';
   
-
-  const addDriver = () => {
-    setFormData({
-      ...formData,
-      drivers: [...formData.drivers, {
+  const BookingForm = () => {
+    const [formData, setFormData] = useState({
+      bname: '',
+      bphone: '',
+      vehiclesId: '',
+      bemail: '',
+      bsize: '',
+      baddress: '',
+      baddressh: '',
+      drivers: [{
         dname: '',
         dphone: '',
         demail: '',
         dlicense: null,
-        dpolicy: null,  
+        dpolicy: null,
         dexperience: ''
       }]
     });
-  };
-
-  const removeDriver = (index) => {
-    const updatedDrivers = formData.drivers.filter((_, i) => i !== index);
-    setFormData({
-      ...formData,
-      drivers: updatedDrivers
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMessage('');
-    setSuccessMessage('');
   
-    const formDataToSend = new FormData();
+    const [reservationId, setReservationId] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
   
-    // Append the booking form data
-    formDataToSend.append('bname', formData.bname);
-    formDataToSend.append('bphone', formData.bphone);
-    formDataToSend.append('bemail', formData.bemail);
-    formDataToSend.append('bsize', formData.bsize);
-    formDataToSend.append('baddress', formData.baddress);
-    formDataToSend.append('baddressh', formData.baddressh);
-    formDataToSend.append('vehiclesId', formData.vehiclesId);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { season, day } = location.state || {};
   
-    // Append reservationId separately, outside of the drivers loop
-    if (reservationId) {
-      formDataToSend.append('reservationId', reservationId);
-    }
-  
-    // Append the driver details
-    formData.drivers.forEach((driver, index) => {
-      formDataToSend.append(`drivers[${index}][dname]`, driver.dname);
-      formDataToSend.append(`drivers[${index}][dphone]`, driver.dphone);
-      formDataToSend.append(`drivers[${index}][demail]`, driver.demail);
-      formDataToSend.append(`drivers[${index}][dexperience]`, driver.dexperience);
-  
-      if (driver.dlicense) {
-        formDataToSend.append(`drivers[${index}][dlicense]`, driver.dlicense);
+    useEffect(() => {
+      const id = localStorage.getItem('reservationId');
+      if (id) {
+        setReservationId(id); // Set the reservation ID into state
       }
-      if (driver.dpolicy) {
-        formDataToSend.append(`drivers[${index}][dpolicy]`, driver.dpolicy);
-      }
-    });
+    }, []);
   
-    try {
-      const response = await axios.post('http://44.196.192.232:5001/api/book/create', formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+    const getSize = async () => {
+      try {
+        const vehicleId = localStorage.getItem('vehicleId');
+        if (!vehicleId) {
+          console.error('Vehicle ID not found in local storage');
+          return;
+        }
+  
+        // Validate season and day before making the request
+        if (!season || !day) {
+          console.error('Season or day not specified in state');
+          return;
+        }
+  
+        // Include season and day in the API request
+        const response = await axios.get(
+          `http://44.196.192.232:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`
+        );
+        const data = response.data;
+  
+        setFormData(prevData => ({
+          ...prevData,
+          vehiclesId: vehicleId,
+          bsize: data.passenger
+        }));
+      } catch (error) {
+        console.log('Error fetching vehicle details', error);
+      }
+    };
+  
+    useEffect(() => {
+      getSize();
+    }, []);
+  
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    };
+  
+    const handleDriverChange = (index, e) => {
+      const { name, value } = e.target;
+      const updatedDrivers = [...formData.drivers];
+      updatedDrivers[index][name] = value;
+      setFormData({
+        ...formData,
+        drivers: updatedDrivers
+      });
+    };
+  
+    const handleFileChange = (index, fileType, event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const newDrivers = [...formData.drivers];
+        newDrivers[index][fileType] = file;
+        setFormData({ ...formData, drivers: newDrivers });
+      }
+    };
+  
+    const addDriver = () => {
+      setFormData({
+        ...formData,
+        drivers: [...formData.drivers, {
+          dname: '',
+          dphone: '',
+          demail: '',
+          dlicense: null,
+          dpolicy: null,
+          dexperience: ''
+        }]
+      });
+    };
+  
+    const removeDriver = (index) => {
+      const updatedDrivers = formData.drivers.filter((_, i) => i !== index);
+      setFormData({
+        ...formData,
+        drivers: updatedDrivers
+      });
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      setErrorMessage('');
+  
+      const formDataToSubmit = new FormData();
+  
+      // Append booking details
+      formDataToSubmit.append('bname', formData.bname);
+      formDataToSubmit.append('bphone', formData.bphone);
+      formDataToSubmit.append('bemail', formData.bemail);
+      formDataToSubmit.append('bsize', formData.bsize);
+      formDataToSubmit.append('baddress', formData.baddress);
+      formDataToSubmit.append('baddressh', formData.baddressh);
+  
+      // Convert drivers array to JSON string and append
+      const driversPayload = formData.drivers.map((driver) => ({
+        dname: driver.dname,
+        dphone: driver.dphone,
+        demail: driver.demail,
+        dexperience: driver.dexperience,
+      }));
+      formDataToSubmit.append('customerDrivers', JSON.stringify(driversPayload));
+  
+      // Append files (policy and license)
+      formData.drivers.forEach((driver) => {
+        if (driver.dpolicy) {
+          formDataToSubmit.append('dpolicy', driver.dpolicy); // Binary file for policy
+        }
+        if (driver.dlicense) {
+          formDataToSubmit.append('dlicense', driver.dlicense); // Binary file for license
         }
       });
   
-      if (response.status === 201) {
-        setSuccessMessage('Booking successfully created!');
-        localStorage.setItem('bookFormId', response.data.id);
-        navigate('/agreement');
-      } else {
-        setErrorMessage(`Failed to save booking data: ${response.data.message || 'Unknown error'}`);
+      try {
+        const response = await axios.post('http://localhost:5001/api/book/create', formDataToSubmit, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        setLoading(false);
+        setSuccessMessage(response.data.message);
+        navigate('/agreement'); // Redirect to a success page (example)
+      } catch (err) {
+        setLoading(false);
+        setErrorMessage(err.response ? err.response.data.message : 'Something went wrong.');
       }
-    } catch (error) {
-      setErrorMessage('Error submitting the form. Please try again.');
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
-    }
+    };
+  
+    return (
+      <form className="booking-form" onSubmit={handleSubmit}>
+        <h1>Enter Your Booking Details</h1>
+  
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {successMessage && <div className="success-message">{successMessage}</div>}
+  
+        <div className="form-grid">
+          <div className="form-group">
+            <label><i className="fa-solid fa-person"></i> Name</label>
+            <input type="text" name="bname" placeholder="Enter Your Name" value={formData.bname} onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label><i className="fa-solid fa-phone"></i> Phone Number</label>
+            <input type="text" name="bphone" placeholder="Enter Phone Number" value={formData.bphone} onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label><i className="fa-solid fa-envelope"></i> Email</label>
+            <input type="email" name="bemail" placeholder="Enter Email Address" value={formData.bemail} onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label><i className="fa-solid fa-cart-shopping"></i> Size of Cart</label>
+            <input type="text" name="bsize" placeholder="Enter Cart Size" value={formData.bsize} onChange={handleInputChange} readOnly />
+          </div>
+          <div className="form-group">
+            <label><i className="fa-solid fa-house"></i> Rental Address</label>
+            <input type="text" name="baddress" placeholder="Enter Rental Address" value={formData.baddress} onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label><i className="fa-solid fa-house"></i> Home Address</label>
+            <input type="text" name="baddressh" placeholder="Enter Home Address" value={formData.baddressh} onChange={handleInputChange} />
+          </div>
+        </div>
+  
+        <div className="drivers-section">
+          {formData.drivers.map((driver, index) => (
+            <div key={index} className="driver-details">
+              <div className="form-grid">
+                <div className="form-group">
+                  <label><i className="fa-solid fa-person"></i> Driver Name</label>
+                  <input type="text" name="dname" placeholder="Enter Driver Name" value={driver.dname} onChange={(e) => handleDriverChange(index, e)} />
+                </div>
+                <div className="form-group">
+                  <label><i className="fa-solid fa-phone"></i> Phone Number</label>
+                  <input type="text" name="dphone" placeholder="Enter Phone Number" value={driver.dphone} onChange={(e) => handleDriverChange(index, e)} />
+                </div>
+                <div className="form-group">
+                  <label><i className="fa-solid fa-envelope"></i> Email</label>
+                  <input type="email" name="demail" placeholder="Enter Email Address" value={driver.demail} onChange={(e) => handleDriverChange(index, e)} />
+                </div>
+                <div className="form-group">
+                  <label><i className="fa-solid fa-id-card"></i> License</label>
+                  <input type="file" onChange={(e) => handleFileChange(index, 'dlicense', e)} />
+                </div>
+                <div className="form-group">
+                  <label><i className="fa-solid fa-id-card"></i> Policy</label>
+                  <input type="file" onChange={(e) => handleFileChange(index, 'dpolicy', e)} />
+                </div>
+                <div className="form-group">
+                  <label><i className="fa-solid fa-trophy"></i> Experience</label>
+                  <input type="text" name="dexperience" placeholder="Enter Experience" value={driver.dexperience} onChange={(e) => handleDriverChange(index, e)} />
+                </div>
+              </div>
+  
+              {/* <button type="button" className="remove-driver" onClick={() => removeDriver(index)}>Remove Driver</button> */}
+            </div>
+          ))}
+  
+          {/* <button type="button" className="add-driver" onClick={addDriver}>Add Driver</button> */}
+        </div>
+   <div className="checkout-button">
+   <button type="submit" className="submit-button submit-check" disabled={loading}>
+          {loading ? 'Submitting...' : 'Submit Booking'}
+        </button>
+   </div>
+        
+      </form>
+    );
   };
   
+  export default BookingForm;
   
-
-  return (
-    <form className="booking-form" onSubmit={handleSubmit}>
-      <h1>Enter Your Booking Details</h1>
-
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
-      {successMessage && <div className="success-message">{successMessage}</div>}
-
-      <div className="form-grid">
-        <div className="form-group">
-          <label><i className="fa-solid fa-person"></i> Name</label>
-          <input type="text" name="bname" placeholder="Enter Your Name" value={formData.bname} onChange={handleInputChange} />
-        </div>
-        <div className="form-group">
-          <label><i className="fa-solid fa-phone"></i> Phone Number</label>
-          <input type="text" name="bphone" placeholder="Enter Phone Number" value={formData.bphone} onChange={handleInputChange} />
-        </div>
-        <div className="form-group">
-          <label><i className="fa-solid fa-envelope"></i> Email</label>
-          <input type="email" name="bemail" placeholder="Enter Email Address" value={formData.bemail} onChange={handleInputChange} />
-        </div>
-        <div className="form-group">
-          <label><i className="fa-solid fa-cart-shopping"></i> Size of Cart</label>
-          <input type="text" name="bsize" placeholder="Enter Cart Size" value={formData.bsize} onChange={handleInputChange} />
-        </div>
-        <div className="form-group">
-          <label><i className="fa-solid fa-house"></i> Rental Address</label>
-          <input type="text" name="baddress" placeholder="Enter Rental Address" value={formData.baddress} onChange={handleInputChange} />
-        </div>
-        <div className="form-group">
-          <label><i className="fa-solid fa-house"></i> Home Address</label>
-          <input type="text" name="baddressh" placeholder="Enter Home Address" value={formData.baddressh} onChange={handleInputChange} />
-        </div>
-      </div>
-
-      <div className="drivers-section">
-        {formData.drivers.map((driver, index) => (
-          <div key={index} className="driver-details">
-            <div className="form-grid">
-              <div className="form-group">
-                <label><i className="fa-solid fa-person"></i> Name</label>
-                <input type="text" name="dname" placeholder="Enter Driver Name" value={driver.dname} onChange={(e) => handleDriverChange(index, e)} />
-              </div>
-              <div className="form-group">
-                <label><i className="fa-solid fa-phone"></i> Phone Number</label>
-                <input type="text" name="dphone" placeholder="Enter Phone Number" value={driver.dphone} onChange={(e) => handleDriverChange(index, e)} />
-              </div>
-              <div className="form-group">
-                <label><i className="fa-solid fa-envelope"></i> Email</label>
-                <input type="email" name="demail" placeholder="Enter Email Address" value={driver.demail} onChange={(e) => handleDriverChange(index, e)} />
-              </div>
-              <div className="form-group">
-                <label><i className="fa-solid fa-id-card"></i> License</label>
-                <input type="file" onChange={(e) => handleFileChange(index, 'dlicense', e)} />
-              </div>
-              <div className="form-group">
-                <label><i className="fa-solid fa-file"></i> Insurance Policy</label>
-                <input type="file" onChange={(e) => handleFileChange(index, 'dpolicy', e)} />
-              </div>
-              <div className="form-group">
-                <label><i className="fa-solid fa-star"></i> Experience</label>
-                <input type="text" name="dexperience" placeholder="Enter Experience" value={driver.dexperience} onChange={(e) => handleDriverChange(index, e)} />
-              </div>
-            </div>
-            <button type="button" className="remove-driver" onClick={() => removeDriver(index)}>Remove Driver</button>
-          </div>
-        ))}
-        <button type="button" className="add-driver" onClick={addDriver}>Add Driver</button>
-      </div>
-
-      <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit Booking'}</button>
-    </form>
-  );
-};
-
-export default BookingForm;

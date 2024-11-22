@@ -115,6 +115,7 @@
 // }
 .home1 {
   .image-container {
+    position: relative; // Set relative positioning to align the button with this container
     overflow: hidden;
     top: 0;
 
@@ -125,12 +126,12 @@
     }
 
     .home1-btn {
-      position: absolute;
+      position: absolute; // Button is now positioned relative to the image container
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
-      bottom: 1%; // Raised button slightly to ensure visibility
+      bottom: 5%; // Place the button near the bottom of the image
       left: 0;
       z-index: 10;
 
@@ -141,9 +142,7 @@
         font-family: Raleway, sans-serif;
         font-size: 24px;
         font-weight: 600;
-        
         letter-spacing: 0.1px;
-        
         background-color: transparent;
         border: 2px solid black;
         border-radius: 50px;
