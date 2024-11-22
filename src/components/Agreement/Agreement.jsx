@@ -155,6 +155,17 @@ const handleClear = () => {
           const formData = new FormData();
           formData.append('image', uploadedFile); // Use the uploadedFile state
           formData.append('userId', userId); // Append the user ID
+
+          if (!checkboxes.guidelineAgreement || !checkboxes.feesAgreement) {
+                Toastify({
+                  text: "Please agree to all guidelines and fees!",
+                  duration: 3000,
+                  gravity: "top",
+                  position: 'right',
+                  backgroundColor: "red",
+                }).showToast();
+                return;
+              }
   
           // Make the API request to upload the image
           const uploadResponse = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
@@ -179,13 +190,13 @@ const handleClear = () => {
           console.log('PDF generated successfully:', pdfResponse.data);
   
           // Notify the user of PDF generation success
-          Toastify({
-              text: "PDF generated successfully!",
-              duration: 3000,
-              gravity: "top",
-              position: 'right',
-              backgroundColor: "blue",
-          }).showToast();
+          // Toastify({
+          //     text: "PDF generated successfully!",
+          //     duration: 3000,
+          //     gravity: "top",
+          //     position: 'right',
+          //     backgroundColor: "blue",
+          // }).showToast();
   
           // Navigate to the payment page
           navigate('/payment');

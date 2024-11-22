@@ -129,16 +129,26 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); 
 
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
+
+  const phoneRegex = /^[0-9]{10}$/;  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-
+  
+    
+    if (!phoneRegex.test(phoneNumber)) {
+      toast.error("Phone number should only contain numbers.");
+      return; 
+    }
+  
     setError("");
     const formData = {
       fullName,
@@ -149,25 +159,37 @@ function SignUp() {
       confirmPassword,
     };
 
+    setLoading(true); 
+
     try {
       const response = await axios.post('http://44.196.192.232:5001/api/auth/signUp', formData);
       console.log(response.data);
-
-      // Show success toast
+  
+      
       toast.success("User created successfully!");
-
-      // Delay navigation to allow toast to display
+  
+      
       setTimeout(() => {
         navigate('/login');
-      }, 2000); // Delay for 2 seconds
+      }, 2000); 
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        // Email already exists
-        toast.error("User already exists with this email.");
+      if (error.response) {
+       
+        const errorMessage = error.response.data.message || "An error occurred. Please try again later.";
+      
+        
+        if (error.response.status === 400 && errorMessage === "Email is already registered") {
+          toast.error("Email is already registered. Please use a different email.");
+        } else {
+          
+          toast.error(errorMessage);
+        }
       } else {
-        console.error("There was an error submitting the form!", error);
-        toast.error("An error occurred during sign-up. Please try again.");
+        
+        toast.error("Network error or server not responding.");
       }
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -237,7 +259,9 @@ function SignUp() {
         </div>
         {error && <p className="error">{error}</p>}
         <div className="form-group button-signup">
-          <button type="submit" className="submit-btn">Sign Up</button>
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
         </div>
       </form>
       <ToastContainer />
