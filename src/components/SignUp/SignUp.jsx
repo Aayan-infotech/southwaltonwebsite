@@ -32,7 +32,7 @@
 //     };
 
 //     try {
-//       const response = await axios.post('http://localhost:5001/api/auth/signUp', formData);
+//       const response = await axios.post('http://44.196.192.232:5001/api/auth/signUp', formData);
 //       console.log(response.data);
 //       navigate('/login'); // Navigate to the login page on successful signup
 //     } catch (error) {
@@ -150,7 +150,7 @@ function SignUp() {
     };
 
     try {
-      const response = await axios.post('http://localhost:5001/api/auth/signUp', formData);
+      const response = await axios.post('http://44.196.192.232:5001/api/auth/signUp', formData);
       console.log(response.data);
 
       // Show success toast

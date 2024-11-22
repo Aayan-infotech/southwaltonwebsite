@@ -380,7 +380,7 @@
       });
   
       try {
-        const response = await axios.post('http://localhost:5001/api/book/create', formDataToSubmit, {
+        const response = await axios.post('http://44.196.192.232:5001/api/book/create', formDataToSubmit, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         setLoading(false);
