@@ -145,87 +145,108 @@ const handleClear = () => {
   // };
 
   // mahi
-  const handleSubmit = async (e) => {
-    if (isLoading) return;
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  if (isLoading) return;
+  e.preventDefault();
 
-    if (uploadedFile && userId) {
-      try {
-        setIsLoading(true);
-          const formData = new FormData();
-          formData.append('image', uploadedFile); // Use the uploadedFile state
-          formData.append('userId', userId); // Append the user ID
-
-          if (!checkboxes.guidelineAgreement || !checkboxes.feesAgreement) {
-                Toastify({
-                  text: "Please agree to all guidelines and fees!",
-                  duration: 3000,
-                  gravity: "top",
-                  position: 'right',
-                  backgroundColor: "red",
-                }).showToast();
-                return;
-              }
+  // If either checkbox is unchecked
+  if (!checkboxes.guidelineAgreement || !checkboxes.feesAgreement) {
+    // Mark the checkboxes as error
+    const guidelineCheckbox = document.getElementById('guidelineAgreement');
+    const feesCheckbox = document.getElementById('feesAgreement');
   
-          // Make the API request to upload the image
-          const uploadResponse = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
-              headers: {
-                  'Content-Type': 'multipart/form-data',
-              },
-          });
+    let scrolledTo = false; // To ensure only the first unchecked checkbox scrolls
   
-          console.log('Image uploaded successfully:', uploadResponse.data);
-  
-          Toastify({
-              text: "Image uploaded successfully!",
-              duration: 3000,
-              gravity: "top",
-              position: 'right',
-              backgroundColor: "green",
-          }).showToast(); // Notify user on success
-  
-          // After successful image upload, generate the PDF
-          const pdfResponse = await axios.post('http://44.196.192.232:5001/generate-pdf', { userId });
-  
-          console.log('PDF generated successfully:', pdfResponse.data);
-  
-          // Notify the user of PDF generation success
-          // Toastify({
-          //     text: "PDF generated successfully!",
-          //     duration: 3000,
-          //     gravity: "top",
-          //     position: 'right',
-          //     backgroundColor: "blue",
-          // }).showToast();
-  
-          // Navigate to the payment page
-          navigate('/payment');
-  
-      } catch (error) {
-          console.error('Error:', error);
-          console.error('Response data:', error.response?.data); // Log response data for debugging
-  
-          Toastify({
-              text: error.response?.data?.message || "Error occurred. Please try again.",
-              duration: 3000,
-              gravity: "top",
-              position: 'right',
-              backgroundColor: "red",
-          }).showToast(); // Notify user on error
+    // Add error styles and scroll if necessary
+    if (!checkboxes.guidelineAgreement) {
+      guidelineCheckbox.closest('.check').classList.add('error-checkbox');
+      if (!scrolledTo) {
+        guidelineCheckbox.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+        scrolledTo = true; // Set scroll flag
       }
-      finally {
-        setIsLoading(false); // Hide the loader and re-enable the button
+    } else {
+      guidelineCheckbox.closest('.check').classList.remove('error-checkbox');
+    }
+  
+    if (!checkboxes.feesAgreement) {
+      feesCheckbox.closest('.check').classList.add('error-checkbox');
+      if (!scrolledTo) {
+        feesCheckbox.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    } else {
+      feesCheckbox.closest('.check').classList.remove('error-checkbox');
+    }
+  
+    // Display a toast notification
+    Toastify({
+      text: "Please agree to all guidelines and fees!",
+      duration: 3000,
+      gravity: "top",
+      position: 'right',
+      backgroundColor: "red",
+    }).showToast();
+
+    return;
+  }
+
+  if (uploadedFile && userId) {
+    try {
+      setIsLoading(true);
+      const formData = new FormData();
+      formData.append('image', uploadedFile);
+      formData.append('userId', userId);
+
+      // Make the API request to upload the image
+      const uploadResponse = await axios.post('http://44.196.192.232:5001/api/sign/save', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log('Image uploaded successfully:', uploadResponse.data);
+
+      Toastify({
+        text: "Image uploaded successfully!",
+        duration: 3000,
+        gravity: "top",
+        position: 'right',
+        backgroundColor: "green",
+      }).showToast(); // Notify user on success
+
+      // After successful image upload, generate the PDF
+      const pdfResponse = await axios.post('http://44.196.192.232:5001/generate-pdf', { userId });
+
+      console.log('PDF generated successfully:', pdfResponse.data);
+
+      // Navigate to the payment page
+      navigate('/payment');
+    } catch (error) {
+      console.error('Error:', error);
+      Toastify({
+        text: error.response?.data?.message || "Error occurred. Please try again.",
+        duration: 3000,
+        gravity: "top",
+        position: 'right',
+        backgroundColor: "red",
+      }).showToast();
+    } finally {
+      setIsLoading(false);
     }
   } else {
-      Toastify({
-          text: "Please upload an image and ensure user ID is available before submitting.",
-          duration: 3000,
-          gravity: "top",
-          position: 'right',
-          backgroundColor: "orange",
-      }).showToast(); // Notify user if conditions aren't met
+    Toastify({
+      text: "Please upload an image and ensure user ID is available before submitting.",
+      duration: 3000,
+      gravity: "top",
+      position: 'right',
+      backgroundColor: "orange",
+    }).showToast();
   }
-  
 };
 
   return (
