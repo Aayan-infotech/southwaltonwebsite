@@ -25,11 +25,6 @@ $font-family: 'Raleway', sans-serif;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s ease;
-
-            &:hover {
-                transform: translateY(-5px);
-            }
 
             img {
                 width: 100%;
@@ -46,7 +41,6 @@ $font-family: 'Raleway', sans-serif;
                 font-weight: 700;
                 line-height: 46.96px;
                 text-align: left;
-
             }
         }
     }
@@ -62,20 +56,13 @@ $font-family: 'Raleway', sans-serif;
         font-weight: bold;
         color: #333;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: #c0c85e;
-        }
     }
 }
-
 
 .service-areas2 {
     text-align: center;
     padding: 20px;
     background-color: #f5f7eb;
-    
 
     .areas {
         display: flex;
@@ -89,11 +76,6 @@ $font-family: 'Raleway', sans-serif;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s ease;
-
-            &:hover {
-                transform: translateY(-5px);
-            }
 
             img {
                 width: 100%;
@@ -110,7 +92,6 @@ $font-family: 'Raleway', sans-serif;
                 font-weight: 700;
                 line-height: 46.96px;
                 text-align: left;
-
             }
         }
     }
@@ -126,16 +107,20 @@ $font-family: 'Raleway', sans-serif;
         font-weight: bold;
         color: #333;
         cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: #c0c85e;
-        }
     }
 }
 
 @media (max-width: 768px) {
     .service-areas1 {
+        .areas {
+            .area {
+                flex: 1 1 calc(50% - 20px);
+                max-width: calc(50% - 20px);
+            }
+        }
+    }
+
+    .service-areas2 {
         .areas {
             .area {
                 flex: 1 1 calc(50% - 20px);
@@ -154,19 +139,7 @@ $font-family: 'Raleway', sans-serif;
             }
         }
     }
-}
-@media (max-width: 768px) {
-    .service-areas2 {
-        .areas {
-            .area {
-                flex: 1 1 calc(50% - 20px);
-                max-width: calc(50% - 20px);
-            }
-        }
-    }
-}
 
-@media (max-width: 480px) {
     .service-areas2 {
         .areas {
             .area {
