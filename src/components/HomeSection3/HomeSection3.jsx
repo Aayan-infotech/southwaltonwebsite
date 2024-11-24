@@ -235,7 +235,7 @@ import './HomeSection3.scss';
 import { Autocomplete, useLoadScript } from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import the styling for toast
+import 'react-toastify/dist/ReactToastify.css';
 
 const libraries = ['places'];
 
@@ -252,7 +252,7 @@ const CartDetails = () => {
     const navigate = useNavigate();
 
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyByeL4973jLw5-DqyPtVl79I3eDN4uAuAQ', 
+        googleMapsApiKey:  import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
         libraries,
     });
 
@@ -261,51 +261,47 @@ const CartDetails = () => {
             const place = ref.current.getPlace();
             if (place) {
                 const address = place.formatted_address || place.name;
-                if (field === 'delivery') {
-                    setDeliveryLocation(address);
-                } else if (field === 'pickup') {
-                    setPickupLocation(address);
-                }
+                field === 'delivery' ? setDeliveryLocation(address) : setPickupLocation(address);
             }
         }
     }, []);
 
-    const calculateDaysBetween = (start, end) => {
+    const calculateDaysBetween = useCallback((start, end) => {
         if (!start || !end) return 0;
         const startDateObj = new Date(start);
         const endDateObj = new Date(end);
         const differenceInTime = endDateObj - startDateObj;
         const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
         return differenceInDays >= 0 ? differenceInDays : 0;
-    };
+    }, []);
 
     useEffect(() => {
         const days = calculateDaysBetween(startDate, endDate);
         setNumOfDays(days);
-    }, [startDate, endDate]);
+    }, [startDate, endDate, calculateDaysBetween]);
 
     const handleFindCartClick = async () => {
-        // Check if any of the required fields are empty
         if (!pickupLocation || !deliveryLocation || !startDate || !endDate) {
-            toast.error('Please fill all the fields!'); // Show error toast
-            return; // Prevent further execution
+            toast.error('Please fill all the fields!');
+            return;
         }
-    
-        // Retrieve user ID from local storage
-        const userId = localStorage.getItem('user'); // Adjust the key as per your setup
-    
-        // Create the payload to send to the API
+
+        if (new Date(endDate) < new Date(startDate)) {
+            toast.error('End Date must be after Start Date.');
+            return;
+        }
+
+        const userId = localStorage.getItem('user');
         const data = {
             pickup: pickupLocation,
             drop: deliveryLocation,
             pickdate: startDate,
             dropdate: endDate,
             days: numOfDays.toString(),
-            userId: userId, // Include user ID in the payload
+            userId,
         };
-    
+
         try {
-            // POST request to the API
             const response = await fetch('http://44.196.192.232:5001/api/reserve/reservation', {
                 method: 'POST',
                 headers: {
@@ -313,39 +309,32 @@ const CartDetails = () => {
                 },
                 body: JSON.stringify(data),
             });
-    
-            if (!response.ok) {
-                throw new Error('Failed to submit reservation');
-            }
-    
+
+            if (!response.ok) throw new Error('Failed to submit reservation');
+
             const result = await response.json();
-            console.log('API response:', result);
-    
-            // Extract reservation ID from the result and store it in localStorage
             const { id } = result;
+
             if (id) {
                 localStorage.setItem('reservationId', id);
+                toast.success('Reservation successful!');
+                navigate('/cart');
             } else {
-                console.log('reserveId not found in the response');
+                toast.error('Reservation failed. Please try again.');
             }
-    
-            console.log('Reservation successful:', result);
-    
-            // Redirect to another page after successful reservation
-            navigate('/cart');
         } catch (error) {
             console.error('Error:', error);
+            toast.error('Something went wrong. Please try again later.');
         }
     };
-    
 
     if (loadError) return <div>Error loading maps: {loadError.message}</div>;
     if (!isLoaded) return <div>Loading Maps...</div>;
 
     return (
         <>
-            <ToastContainer /> {/* Add Toaster Container */}
-            <div className='kk'>
+            <ToastContainer />
+            <div className="kk">
                 <div className="home3-header">
                     <u><h1>CART DETAILS</h1></u>
                 </div>
@@ -354,7 +343,7 @@ const CartDetails = () => {
                         <div className="input-wrapper">
                             <label><i className="fa-solid fa-location-dot"></i> Delivery</label>
                             <Autocomplete
-                                onLoad={(ref) => deliveryRef.current = ref}
+                                onLoad={(ref) => (deliveryRef.current = ref)}
                                 onPlaceChanged={() => handlePlaceChanged('delivery', deliveryRef)}
                             >
                                 <input
@@ -368,7 +357,7 @@ const CartDetails = () => {
                         <div className="input-wrapper">
                             <label><i className="fa-solid fa-location-dot"></i> Pickup</label>
                             <Autocomplete
-                                onLoad={(ref) => pickupRef.current = ref}
+                                onLoad={(ref) => (pickupRef.current = ref)}
                                 onPlaceChanged={() => handlePlaceChanged('pickup', pickupRef)}
                             >
                                 <input
@@ -387,8 +376,8 @@ const CartDetails = () => {
                             <input
                                 type="date"
                                 className="date-box"
-                                id="startDate"
                                 value={startDate}
+                                min={new Date().toISOString().split('T')[0]}
                                 onChange={(e) => setStartDate(e.target.value)}
                             />
                         </div>
@@ -397,15 +386,14 @@ const CartDetails = () => {
                             <input
                                 type="date"
                                 className="date-box"
-                                id="endDate"
                                 value={endDate}
+                                min={startDate || new Date().toISOString().split('T')[0]}
                                 onChange={(e) => setEndDate(e.target.value)}
                             />
                         </div>
                     </div>
-
                 </div>
-                <div className='pp'>
+                <div className="pp">
                     <button onClick={handleFindCartClick}>
                         <i className="fa-solid fa-magnifying-glass"></i> Find Cart
                     </button>
