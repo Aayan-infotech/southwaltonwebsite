@@ -223,6 +223,16 @@ const handleSubmit = async (e) => {
       const pdfResponse = await axios.post('http://44.196.192.232:5001/generate-pdf', { userId });
 
       console.log('PDF generated successfully:', pdfResponse.data);
+      const { pdfUrl } = pdfResponse.data;  // Extract the PDF URL from the response
+
+      // Make a PUT request to update the PDF URL in the database
+      const updatePdfResponse = await axios.put('http://44.196.192.232:5001/api/sign/update-pdf', {
+        userId,
+        pdf: pdfUrl,  // Send the PDF URL along with the userId
+      });
+
+      console.log('PDF URL updated successfully:', updatePdfResponse.data);
+
 
       // Navigate to the payment page
       navigate('/payment');
