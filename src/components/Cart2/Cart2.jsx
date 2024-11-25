@@ -431,7 +431,7 @@ const fetchVehicledata = async (season, day, setCardDetails, setError) => {
 
 const changecartstatus = async (id, status) => {
     try {
-        await axios.put(`http://44.196.192.232:5001/api/vehicle/changestatus/${id}`, { status });
+        // await axios.put(`http://44.196.192.232:5001/api/vehicle/changestatus/${id}`, { status });
     } catch (error) {
         console.log('Error changing Status', error);
     }

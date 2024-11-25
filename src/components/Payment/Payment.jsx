@@ -1383,6 +1383,7 @@ const CheckoutForm = () => {
                 setMessage(result.error.message);
             } else if (result.paymentIntent.status === 'succeeded') {
                 const userId = localStorage.getItem('user');
+                localStorage.removeItem('price')
                 const bookingId = localStorage.getItem('bookFormId'); // Retrieve bookingId from localStorage
                 await sendPaymentDetails(transactionId, userId, bookingId, reservationId); // Pass reservationId
 
