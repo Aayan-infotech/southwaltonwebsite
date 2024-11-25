@@ -278,7 +278,7 @@
   
         // Include season and day in the API request
         const response = await axios.get(
-          `http://44.196.192.232  :8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`
+          `http://44.196.192.232:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`
         );
         const data = response.data;
   
@@ -384,6 +384,7 @@
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         setLoading(false);
+        localStorage.setItem('bookFormId', response.data.bookingId);
         setSuccessMessage(response.data.message);
         navigate('/agreement'); // Redirect to a success page (example)
       } catch (err) {
