@@ -302,7 +302,7 @@ const CartDetails = () => {
         };
 
         try {
-            const response = await fetch('http://18.209.197.35 :5001/api/reserve/reservation', {
+            const response = await fetch('http://18.209.197.35:5001/api/reserve/reservation', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

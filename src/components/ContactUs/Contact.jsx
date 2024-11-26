@@ -32,7 +32,7 @@ const Contact = () => {
     };
 
         try {
-            const response = await axios.post(`http://18.209.197.35 :5001/api/create/creeate`, userDataToSend, {
+            const response = await axios.post(`http://18.209.197.35:5001/api/create/creeate`, userDataToSend, {
                 headers: {
                     'Content-Type': 'application/json'  
                 },
