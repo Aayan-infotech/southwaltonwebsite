@@ -276,14 +276,21 @@
         };
     
         // Fetch vehicle details
-        useEffect(() => {
-            if (vehicleId && season && day) {
-                fetch(`http://18.209.197.35:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
-                    .then(response => response.json())
-                    .then(data => setVehicleDetails(data))
-                    .catch(error => console.error('Error fetching vehicle details:', error));
-            }
-        }, [vehicleId, season, day, location]);
+      // Fetch vehicle details
+useEffect(() => {
+    if (vehicleId && season && day) {
+        fetch(`http://18.209.197.35:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
+            .then(response => response.json())
+            .then(data => {
+                setVehicleDetails(data);
+                if (data?.price) {
+                    localStorage.setItem('price', data.price); 
+                }
+            })
+            .catch(error => console.error('Error fetching vehicle details:', error));
+    }
+}, [vehicleId, season, day, location]);
+
     
         // Fetch reservation dates
         useEffect(() => {
@@ -292,6 +299,7 @@
                     .then(response => response.json())
                     .then(data => setReservationDates(data))
                     .catch(error => console.error('Error fetching reservation dates:', error));
+                    
             }
         }, [reservationId, location]);
     
