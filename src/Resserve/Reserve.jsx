@@ -383,7 +383,7 @@
                             &nbsp;<span>{`${vehicleDetails?.passenger || '4'} `}</span>
                         </h3>
                         <h4>
-                            Price: <span>${price}</span>
+                            Price: <span>${vehicleDetails.price}</span>
                         </h4>
                         <p>
                             Start Date: <span>{reservationDates?.pickdate ? formatDate(reservationDates.pickdate) : '2 October 2024'}</span>
