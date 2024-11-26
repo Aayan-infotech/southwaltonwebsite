@@ -47,7 +47,7 @@
   //         return;
   //       }
 
-  //       const response = await axios.get(`http://44.196.192.232:5001/api/vehicle/vehicles/${vehicleId}`);
+  //       const response = await axios.get(`http://18.209.197.35 :5001/api/vehicle/vehicles/${vehicleId}`);
   //       const data = response.data;
   //       console.log('API response data:', data); // Verify the data structure
   //       setFormData(prevData => ({
@@ -109,7 +109,7 @@
   //     e.preventDefault();
 
   //     try {
-  //       const response = await fetch('http://44.196.192.232:5001/api/book/create', {
+  //       const response = await fetch('http://18.209.197.35 :5001/api/book/create', {
   //         method: 'POST',
   //         headers: {
   //           'Content-Type': 'application/json'
@@ -278,7 +278,7 @@
   
         // Include season and day in the API request
         const response = await axios.get(
-          `http://44.196.192.232:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`
+          `http://18.209.197.35 :8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`
         );
         const data = response.data;
   
@@ -380,7 +380,7 @@
       });
   
       try {
-        const response = await axios.post('http://44.196.192.232:5001/api/book/create', formDataToSubmit, {
+        const response = await axios.post('http://18.209.197.35 :5001/api/book/create', formDataToSubmit, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         setLoading(false);

@@ -8,7 +8,7 @@
 
 // const fetchVehicledata = async (setCardDetails, setError) => {
 //   try {
-//     const response = await axios.get('http://44.196.192.232:5001/api/vehicle/');
+//     const response = await axios.get('http://18.209.197.35 :5001/api/vehicle/');
 //     setCardDetails(response.data);
 //   } catch (error) {
 //     setError('Error fetching details');
@@ -18,7 +18,7 @@
 
 // const changecartstatus = async(id, status) => {
 //   try{
-//     await axios.put(`http://44.196.192.232:5001/api/vehicle/changestatus/${id}`,{status})
+//     await axios.put(`http://18.209.197.35 :5001/api/vehicle/changestatus/${id}`,{status})
 //   }catch(error){
 //     console.log('Error changing Status', error);
 //   }
@@ -45,7 +45,7 @@
 
 // const Card = ({ image, passengers, model, price, id, status, }) => {
 //   const [rating, setRating] = useState(0);
-//   const imageUrl = image ? `http://44.196.192.232:5001/uploads/${image}` : Group3;
+//   const imageUrl = image ? `http://18.209.197.35 :5001/uploads/${image}` : Group3;
 //   const history = useNavigate();
 //   const [isPopupVisible, setPopupVisible] = useState(false);
 //   const handleChooseClick = () => {
@@ -137,7 +137,7 @@
 
 // const fetchVehicledata = async (setCardDetails, setError) => {
 //   try {
-//     const response = await axios.get('http://44.196.192.232:5001/api/vehicle/');
+//     const response = await axios.get('http://18.209.197.35 :5001/api/vehicle/');
 //     setCardDetails(response.data);
 //   } catch (error) {
 //     setError('Error fetching details');
@@ -147,7 +147,7 @@
 
 // const changecartstatus = async (id, status) => {
 //   try {
-//     await axios.put(`http://44.196.192.232:5001/api/vehicle/changestatus/${id}`, { status });
+//     await axios.put(`http://18.209.197.35 :5001/api/vehicle/changestatus/${id}`, { status });
 //   } catch (error) {
 //     console.log('Error changing Status', error);
 //   }
@@ -176,7 +176,7 @@
 //   const [rating, setRating] = useState(0);
 //   const [isPopupVisible, setPopupVisible] = useState(false);
 //   const navigate = useNavigate();
-//   const imageUrl = image ? `http://44.196.192.232:5001/uploads/${image}` : Group3;
+//   const imageUrl = image ? `http://18.209.197.35 :5001/uploads/${image}` : Group3;
 
 //   const handleChooseClick = () => {
 //     setPopupVisible(true);
@@ -276,7 +276,7 @@
 
 // const fetchVehicledata = async (setCardDetails, setError) => {
 //   try {
-//     const response = await axios.get('http://44.196.192.232:5001/api/vehicle/');
+//     const response = await axios.get('http://18.209.197.35 :5001/api/vehicle/');
 //     setCardDetails(response.data);
 //   } catch (error) {
 //     setError('Error fetching details');
@@ -286,7 +286,7 @@
 
 // const changecartstatus = async (id, status) => {
 //   try {
-//     await axios.put(`http://44.196.192.232:5001/api/vehicle/changestatus/${id}`, { status });
+//     await axios.put(`http://18.209.197.35 :5001/api/vehicle/changestatus/${id}`, { status });
 //   } catch (error) {
 //     console.log('Error changing Status', error);
 //   }
@@ -415,7 +415,7 @@ const calculateDayDifference = (pickupDate, dropoffDate) => {
 
 const fetchVehicledata = async (season, day, setCardDetails, setError) => {
     try {
-        const response = await axios.get('http://44.196.192.232:8132/api/vehicle/by-season-and-day', {
+        const response = await axios.get('http://18.209.197.35 :8132/api/vehicle/by-season-and-day', {
             params: { season, day },
         });
         if (response.data?.length > 0) {
@@ -431,7 +431,7 @@ const fetchVehicledata = async (season, day, setCardDetails, setError) => {
 
 const changecartstatus = async (id, status) => {
     try {
-        // await axios.put(`http://44.196.192.232:5001/api/vehicle/changestatus/${id}`, { status });
+        // await axios.put(`http://18.209.197.35 :5001/api/vehicle/changestatus/${id}`, { status });
     } catch (error) {
         console.log('Error changing Status', error);
     }
@@ -499,7 +499,7 @@ const Cart2 = () => {
     useEffect(() => {
         const reservationId = localStorage.getItem('reservationId');
         if (reservationId) {
-            axios.get(`http://44.196.192.232:5001/api/reserve/reservation/${reservationId}`)
+            axios.get(`http://18.209.197.35 :5001/api/reserve/reservation/${reservationId}`)
                 .then(response => {
                     const reservationData = response.data;
                     if (reservationData && reservationData.pickdate && reservationData.dropdate) {

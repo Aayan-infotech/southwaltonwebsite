@@ -32,7 +32,7 @@
 //     };
 
 //     try {
-//       const response = await axios.post('http://44.196.192.232:5001/api/auth/signUp', formData);
+//       const response = await axios.post('http://18.209.197.35 :5001/api/auth/signUp', formData);
 //       console.log(response.data);
 //       navigate('/login'); // Navigate to the login page on successful signup
 //     } catch (error) {
@@ -162,7 +162,7 @@ function SignUp() {
     setLoading(true); 
 
     try {
-      const response = await axios.post('http://44.196.192.232:5001/api/auth/signUp', formData);
+      const response = await axios.post('http://18.209.197.35 :5001/api/auth/signUp', formData);
       console.log(response.data);
   
       
