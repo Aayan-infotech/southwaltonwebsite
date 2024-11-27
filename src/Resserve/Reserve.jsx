@@ -25,7 +25,7 @@
 //     // Fetch vehicle details from API
 //     useEffect(() => {
 //         if (vehicleId) {
-//             fetch(`http://18.209.197.35:5001/api/vehicle/vehicles/${vehicleId}`)
+//             fetch(`http://44.196.64.110:5001/api/vehicle/vehicles/${vehicleId}`)
 //                 .then(response => response.json())
 //                 .then(data => {
 //                     setVehicleDetails(data);
@@ -39,7 +39,7 @@
 //     // Fetch reservation dates from API
 //     useEffect(() => {
 //         if (reservationId) {
-//             fetch(`http://18.209.197.35:5001/api/reserve/reservation/${reservationId}`)
+//             fetch(`http://44.196.64.110:5001/api/reserve/reservation/${reservationId}`)
 //                 .then(response => response.json())
 //                 .then(data => {
 //                     setReservationDates(data);
@@ -119,7 +119,7 @@
 
     //     useEffect(() => {
     //         if (vehicleId && season && day) {
-    //             fetch(`http://18.209.197.35:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
+    //             fetch(`http://44.196.64.110:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
     //                 .then(response => response.json())
     //                 .then(data => setVehicleDetails(data))
     //                 .catch(error => console.error('Error fetching vehicle details:', error));
@@ -128,7 +128,7 @@
 
     //     useEffect(() => {
     //         if (reservationId) {
-    //             fetch(`http://18.209.197.35:5001/api/reserve/reservation/${reservationId}`)
+    //             fetch(`http://44.196.64.110:5001/api/reserve/reservation/${reservationId}`)
     //                 .then(response => response.json())
     //                 .then(data => setReservationDates(data))
     //                 .catch(error => console.error('Error fetching reservation dates:', error));
@@ -187,7 +187,7 @@
     //         }
         
     //         try {
-    //             const response = await fetch(`http://18.209.197.35:5001/api/reserve/reservation/${reservationId}`, {
+    //             const response = await fetch(`http://44.196.64.110:5001/api/reserve/reservation/${reservationId}`, {
     //                 method: 'PUT',
     //                 headers: {
     //                     'Content-Type': 'application/json',
@@ -278,7 +278,7 @@ const Reserve = () => {
     // Fetch vehicle details
     useEffect(() => {
         if (vehicleId && season && day) {
-            fetch(`http://18.209.197.35:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
+            fetch(`http://44.196.64.110:8132/api/vehicle/price/${vehicleId}?season=${season}&day=${day}`)
                 .then(response => response.json())
                 .then(data => {
                     setVehicleDetails(data);
@@ -293,7 +293,7 @@ const Reserve = () => {
     // Fetch reservation dates
     useEffect(() => {
         if (reservationId) {
-            fetch(`http://18.209.197.35:5001/api/reserve/reservation/${reservationId}`)
+            fetch(`http://44.196.64.110:5001/api/reserve/reservation/${reservationId}`)
                 .then(response => response.json())
                 .then(data => setReservationDates(data))
                 .catch(error => console.error('Error fetching reservation dates:', error));
@@ -349,7 +349,7 @@ const Reserve = () => {
         }
 
         try {
-            const response = await fetch(`http://18.209.197.35:5001/api/reserve/reservation/${reservationId}`, {
+            const response = await fetch(`http://44.196.64.110:5001/api/reserve/reservation/${reservationId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
