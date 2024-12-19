@@ -22,7 +22,6 @@ const InvoiceDetails = () => {
   }
 
   useEffect(() => {
-    // Fetch the reservation ID from localStorage
     const reservationId = localStorage.getItem("reservationId");
 
     if (!reservationId) {
