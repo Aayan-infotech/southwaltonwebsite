@@ -24,7 +24,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send POST request to login endpoint
+      
       const response = await axios.post('http://3.111.163.2:5001/api/auth/login', formData);
       
       // Save token and user data to localStorage
